@@ -26,7 +26,7 @@ namespace ApplicationCore.Entities
     }
     public enum Gender 
     { 
-    male = 1,
-    female =0
+        male = 1,
+        female = 0
     }
 }
