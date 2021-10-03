@@ -1,3 +1,4 @@
+using ApplicationCore.Services;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,9 @@ namespace Web
 
             // Configure DbContext with SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
+
+            // Configure the Services
+            services.AddTransient<UserService>();
 
             services.AddSwaggerGen(c =>
             {
