@@ -8,14 +8,14 @@ namespace Comunicazione.Core.Entities
 {
     public class Address
     {
-        public Guid Id { get; protected set; }
-        public string Country { get; protected set; }
-        public string City { get; protected set; }
-        public string Street { get; protected set; }
-        public double Longitude { get; protected set; }
-        public double Latitude { get; protected set; }
-        public DateTime DateCreated { get; protected set; }
-        public DateTime DateUpdated { get; protected set; }
+        public Guid Id { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get;  set; }
+        public double Longitude { get;  set; }
+        public double Latitude { get;  set; }
+        public DateTime DateCreated { get;  set; }
+        public DateTime DateUpdated { get;  set; }
 
     }
 }

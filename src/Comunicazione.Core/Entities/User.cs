@@ -8,15 +8,15 @@ namespace Comunicazione.Core.Entities
 {
     public class User
     {
-        public Guid Id { get; protected set; }
-        public string Email { get; protected set; }
-        public string FirstName { get; protected set; }
-        public string LastName { get; protected set; }
-        public string Password { get; protected set; }
-        public string Salt { get; protected set; }
-        public string Role { get; protected set; }
-        public DateTime DateCreated { get; protected set; }
-        public DateTime DateUpdated { get; protected set; }
-        public ICollection<Post> Posts { get; protected set; }
+        public Guid Id { get;  set; }
+        public string Email { get;  set; }
+        public string FirstName { get;  set; }
+        public string LastName { get;  set; }
+        public string Password { get;  set; }
+        public string Salt { get;  set; }
+        public string Role { get;  set; }
+        public DateTime DateCreated { get;  set; }
+        public DateTime DateUpdated { get;  set; }
+        public ICollection<Post> Posts { get;  set; }
     }
 }
