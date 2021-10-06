@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Core.Entities
 {
-    class User
+    public class User
     {
         public Guid Id { get; protected set; }
         public string Email { get; protected set; }

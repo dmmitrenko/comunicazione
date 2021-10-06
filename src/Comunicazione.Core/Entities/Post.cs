@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Core.Entities
 {
-    class Post
+    public class Post
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
