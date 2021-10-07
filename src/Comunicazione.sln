@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comunicazione.Web", "Comunicazione.Web\Comunicazione.Web.csproj", "{9E44A922-DCA8-4302-A45C-A2852392FE84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comunicazione.Infrastructure", "Comunicazione.Infrastructure\Comunicazione.Infrastructure.csproj", "{D8C18D20-7615-4169-9575-B9F0F50C21E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comunicazione.Infrastructure", "Comunicazione.Infrastructure\Comunicazione.Infrastructure.csproj", "{D8C18D20-7615-4169-9575-B9F0F50C21E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comunicazione.Core", "Comunicazione.Core\Comunicazione.Core.csproj", "{582AAEDD-63AD-4097-B413-287CB204443C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comunicazione.Core", "Comunicazione.Core\Comunicazione.Core.csproj", "{582AAEDD-63AD-4097-B413-287CB204443C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comunicazione.Web", "Comunicazione.Web\Comunicazione.Web.csproj", "{8BE9A340-7FA7-4F3E-B04A-9E790D1C28BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9E44A922-DCA8-4302-A45C-A2852392FE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E44A922-DCA8-4302-A45C-A2852392FE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E44A922-DCA8-4302-A45C-A2852392FE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E44A922-DCA8-4302-A45C-A2852392FE84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8C18D20-7615-4169-9575-B9F0F50C21E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8C18D20-7615-4169-9575-B9F0F50C21E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C18D20-7615-4169-9575-B9F0F50C21E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{582AAEDD-63AD-4097-B413-287CB204443C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{582AAEDD-63AD-4097-B413-287CB204443C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{582AAEDD-63AD-4097-B413-287CB204443C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BE9A340-7FA7-4F3E-B04A-9E790D1C28BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BE9A340-7FA7-4F3E-B04A-9E790D1C28BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BE9A340-7FA7-4F3E-B04A-9E790D1C28BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BE9A340-7FA7-4F3E-B04A-9E790D1C28BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
