@@ -9,7 +9,7 @@ namespace Comunicazione.Core.Repositories
 {
     public interface IPostRepository
     {
-        Task<Post> GetAsync(Guid id);
+        Task<Post> GetAsync(int id);
         Task AddAsync(Post post);
         Task UpdateAsync(Post post);
         Task DeleteAsync(Post post);

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Core.Repositories
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
-        Task<User> GetAsync(Guid id);
+        Task<User> GetAsync(int id);
         Task<User> GetAsync(string email);
         Task AddAsync(User user);
         Task UpdateAsync(User user);
