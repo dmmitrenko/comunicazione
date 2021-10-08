@@ -8,12 +8,14 @@ namespace Comunicazione.Core.Entities
 {
     public class Post
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Content { get; set; }
         public DateTime DateCreated { get;  set; }
         public DateTime DateUpdated { get; set; }
-        public Guid UserId { get;  set; }
         public User User { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+
+        // Navigation prop
+        public int UserId => this.User.Id;
+        public List<Comment> Comments { get; set; }
     }
 }
