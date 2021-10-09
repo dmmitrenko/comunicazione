@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Comunicazione.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Comunicazione.Infrastructure.DTO
 {
     public class PostViewModel
     {
+        public string Content { get; set; }
     }
 }

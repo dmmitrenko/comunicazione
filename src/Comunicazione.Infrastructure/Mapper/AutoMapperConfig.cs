@@ -9,17 +9,14 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Infrastructure.Mapper
 {
-    public static class AutoMapperConfig
+    public class AutoMapperConfig : Profile
     {
-        public static IMapper Initialize()
+        public AutoMapperConfig()
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<User, UserViewModel>();
-                cfg.CreateMap<Post, PostViewModel>();
-            }).CreateMapper();
-
-            return config;
+            CreateMap<UserViewModel, User>();
+                
+            CreateMap<PostViewModel, Post>();
+            
         }
     }
 }

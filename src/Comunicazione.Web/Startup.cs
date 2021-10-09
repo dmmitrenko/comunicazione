@@ -19,6 +19,7 @@ namespace Comunicazione.Web
     public class Startup
     {
         public string ConnectionString { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +32,9 @@ namespace Comunicazione.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Configure AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Configure DBContext with SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
