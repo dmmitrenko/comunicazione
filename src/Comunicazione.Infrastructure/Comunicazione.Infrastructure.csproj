@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Comunicazione.Core\Comunicazione.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,5 @@
 using Comunicazione.Infrastructure.EF;
+using Comunicazione.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,9 @@ namespace Comunicazione.Web
 
             // Configure DBContext with SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
+
+            // Configure the Services
+            services.AddTransient<UsersService>();
 
             services.AddSwaggerGen(c =>
             {
