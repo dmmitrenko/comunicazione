@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
+using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.DTO;
-using Comunicazione.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,30 +10,51 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Web.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private UsersService _userService;
+        private IUnitOfWork _unitOfWork;
    
-        public UserController(IMapper mapper, UsersService userService)
+        public UserController(IUnitOfWork unitOfWork)
         {
-            _mapper = mapper;
-            _userService = userService;
-        }
-       
-
-        [HttpGet("get-user-posts/{id}")]
-        public UserViewModel GetUserPostsById(int id)
-        {
-            var response = _userService.GetUserPostsById(id);
-            
-            return _mapper.Map<UserViewModel>(response);
-        }
-        public IActionResult Index()
-        {
-            return View();
+            _unitOfWork = unitOfWork;
         }
 
+        public IActionResult GetPopularUsers([FromQuery]int count)
+        {
+            var popularUsers = _unitOfWork.Users.GetPopularUsers(count);
+            return Ok(popularUsers);
+        }
 
+        [HttpPost]
+        public IActionResult AddUserAndPost()
+        {
+            var user = new User
+            {
+                FirstName = "Alexander",
+                LastName = "Pushkin",
+                Email = "alexander@dm.com",
+                Password = "IuO90ut1",
+                Role = "Russian poet, playwright, and novelist",
+                Status = "in the process of writing The Captain's Daughter",
+                DateCreated = new DateTime(1818, 7, 20, 17, 54, 25),
+                DateUpdated = new DateTime(1835, 2, 2, 23, 24, 38)
+
+            };
+
+            var post = new Post
+            {
+                Content = "my historical novel. coming soon.",
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                User = user
+            };
+            _unitOfWork.Users.Add(user);
+            _unitOfWork.Posts.Add(post);
+            _unitOfWork.Complete();
+            return Ok();
+        }
+ 
     }
 }

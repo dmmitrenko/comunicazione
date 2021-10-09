@@ -1,5 +1,7 @@
+using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.EF;
-using Comunicazione.Infrastructure.Services;
+using Comunicazione.Infrastructure.Repositories;
+using Comunicazione.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,8 +42,11 @@ namespace Comunicazione.Web
             // Configure DBContext with SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
 
-            // Configure the Services
-            services.AddTransient<UsersService>();
+            // Configure the Repositories
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen(c =>
             {

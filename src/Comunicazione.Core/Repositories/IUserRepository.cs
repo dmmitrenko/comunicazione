@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<User>
     {
-        Task<User> GetAsync(int id);
-        Task<User> GetAsync(string email);
-        Task AddAsync(User user);
-        Task UpdateAsync(User user);
-        Task DeleteAsync(User user);
-
+        IEnumerable<User> GetPopularUsers(int count);
     }
 }

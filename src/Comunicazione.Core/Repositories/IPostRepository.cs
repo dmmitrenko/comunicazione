@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Core.Repositories
 {
-    public interface IPostRepository
+    public interface IPostRepository : IGenericRepository<Post>
     {
-        Task<Post> GetAsync(int id);
-        Task AddAsync(Post post);
-        Task UpdateAsync(Post post);
-        Task DeleteAsync(Post post);
+        
     }
 }

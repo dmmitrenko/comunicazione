@@ -1,5 +1,6 @@
 ﻿using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
+using Comunicazione.Infrastructure.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,31 +9,15 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        private static ISet<User> _user = new HashSet<User>();
-
-        public async Task<User> GetAsync(int id)
-            => await Task.FromResult(_user.SingleOrDefault(x => x.Id == id));
-
-        public async Task<User> GetAsync(string email)
-            => await Task.FromResult(_user.SingleOrDefault(x => x.Email == email));
-
-        public async Task AddAsync(User user)
+        public UserRepository(AppDbContext context) : base(context)
         {
-            _user.Add(user);
-            await Task.CompletedTask;
+           
         }
-
-        public Task UpdateAsync(User user)
+        public IEnumerable<User> GetPopularUsers(int count)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task DeleteAsync(User user)
-        {
-            _user.Remove(user);
-            await Task.CompletedTask;
+            return _context.Users.OrderByDescending(d => d.DateCreated).Take(count).ToList();
         }
     }
 }
