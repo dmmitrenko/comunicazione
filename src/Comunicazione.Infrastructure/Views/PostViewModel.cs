@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Infrastructure.DTO
 {
-    public class PostDto
+    public class PostViewModel
     {
     }
 }

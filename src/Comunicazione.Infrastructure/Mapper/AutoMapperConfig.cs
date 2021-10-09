@@ -15,8 +15,8 @@ namespace Comunicazione.Infrastructure.Mapper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserDto>();
-                cfg.CreateMap<Post, PostDto>();
+                cfg.CreateMap<User, UserViewModel>();
+                cfg.CreateMap<Post, PostViewModel>();
             }).CreateMapper();
 
             return config;
