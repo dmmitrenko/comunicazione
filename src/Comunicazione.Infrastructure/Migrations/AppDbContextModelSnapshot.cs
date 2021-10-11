@@ -4,16 +4,14 @@ using Comunicazione.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Comunicazione.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211008094408_CommentsUsersLinkMigration")]
-    partial class CommentsUsersLinkMigration
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +21,7 @@ namespace Comunicazione.Infrastructure.Migrations
 
             modelBuilder.Entity("Comunicazione.Core.Entities.Address", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -43,19 +41,20 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AddressId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Adresses");
                 });
 
             modelBuilder.Entity("Comunicazione.Core.Entities.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -69,24 +68,19 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PostId1")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
+                    b.HasKey("CommentId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId1");
-
-                    b.HasIndex("UserId1");
+                    b.HasIndex("PostId");
 
                     b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Comunicazione.Core.Entities.Post", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -100,19 +94,19 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("PostId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Comunicazione.Core.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -141,7 +135,7 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -149,8 +143,10 @@ namespace Comunicazione.Infrastructure.Migrations
             modelBuilder.Entity("Comunicazione.Core.Entities.Address", b =>
                 {
                     b.HasOne("Comunicazione.Core.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
+                        .WithOne("Address")
+                        .HasForeignKey("Comunicazione.Core.Entities.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -158,34 +154,29 @@ namespace Comunicazione.Infrastructure.Migrations
             modelBuilder.Entity("Comunicazione.Core.Entities.Comment", b =>
                 {
                     b.HasOne("Comunicazione.Core.Entities.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId1");
-
-                    b.HasOne("Comunicazione.Core.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Comunicazione.Core.Entities.Post", b =>
                 {
                     b.HasOne("Comunicazione.Core.Entities.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Comunicazione.Core.Entities.Post", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
             modelBuilder.Entity("Comunicazione.Core.Entities.User", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

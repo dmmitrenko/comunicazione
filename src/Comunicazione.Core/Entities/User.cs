@@ -14,7 +14,7 @@ namespace Comunicazione.Core.Entities
             DateUpdated = DateTime.Now;
             Password = "Ytrwq9I";
         }
-        public int Id { get;  set; }
+        public int UserId { get;  set; }
         public string Email { get;  set; }
         public string FirstName { get;  set; }
         public string LastName { get;  set; }
@@ -25,6 +25,7 @@ namespace Comunicazione.Core.Entities
         public DateTime DateUpdated { get;  set; }
 
         //Navigation prop
-        public IEnumerable<Post> Posts { get;  set; }
+        public Address Address { get; set; }
+        public  List<Post> Posts { get;  set; }
     }
 }

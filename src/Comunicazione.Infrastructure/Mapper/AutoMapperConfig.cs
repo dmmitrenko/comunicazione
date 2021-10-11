@@ -13,9 +13,10 @@ namespace Comunicazione.Infrastructure.Mapper
     {
         public AutoMapperConfig()
         {
-            CreateMap<UserViewModel, User>();
+            CreateMap<User, UserViewModel>();
+
                 
-            CreateMap<PostViewModel, Post>();
+            CreateMap<Post, PostViewModel>();
             
         }
     }

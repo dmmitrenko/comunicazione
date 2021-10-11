@@ -16,10 +16,12 @@ namespace Comunicazione.Web.Controllers
     public class UserController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
    
-        public UserController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet("get-users")]
@@ -28,6 +30,15 @@ namespace Comunicazione.Web.Controllers
             var popularUsers = _unitOfWork.Users.GetPopularUsers(count);
             return Ok(popularUsers);
         }
+        
+        [HttpGet("get-user-by-id")]
+        public IActionResult GetUserById([FromQuery] int id)
+        {
+            var user = _unitOfWork.Users.GetById(id);
+            var responce = _mapper.Map<UserViewModel>(user);
+            return Ok(responce);
+        }
+
         [HttpPost("add-user")]
         public IActionResult AddUser([FromBody]UserViewModel model)
         {
