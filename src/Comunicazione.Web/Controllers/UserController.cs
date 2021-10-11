@@ -34,8 +34,28 @@ namespace Comunicazione.Web.Controllers
             var validator = new UserValidator();
             var result = validator.Validate(model);
             if (result.IsValid)
+            {
+                var user = new User()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Status = model.Status,
+                    Role = model.Role
+                };
+                _unitOfWork.Users.Add(user);
+                _unitOfWork.Complete();
                 return Ok();
+            }
             return BadRequest(result.Errors);
+        }
+
+        [HttpDelete("delete-user")]
+        public IActionResult DeleteUser([FromQuery]int id)
+        {
+            _unitOfWork.Users.Remove(_unitOfWork.Users.GetById(id));
+            _unitOfWork.Complete();
+            return Ok();
         }
 
         [HttpPost]
