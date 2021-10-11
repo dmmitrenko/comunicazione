@@ -21,6 +21,7 @@ namespace Comunicazione.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet("get-users")]
         public IActionResult GetPopularUsers([FromQuery]int count)
         {
             var popularUsers = _unitOfWork.Users.GetPopularUsers(count);

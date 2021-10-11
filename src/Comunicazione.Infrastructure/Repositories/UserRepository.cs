@@ -17,7 +17,7 @@ namespace Comunicazione.Infrastructure.Repositories
         }
         public IEnumerable<User> GetPopularUsers(int count)
         {
-            return _context.Users.OrderByDescending(d => d.DateCreated).Take(count).ToList();
+            return _context.Users.OrderByDescending(d => d.DateCreated).ToList();
         }
     }
 }
