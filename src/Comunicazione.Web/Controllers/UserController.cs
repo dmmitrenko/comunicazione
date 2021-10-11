@@ -2,6 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,15 @@ namespace Comunicazione.Web.Controllers
         {
             var popularUsers = _unitOfWork.Users.GetPopularUsers(count);
             return Ok(popularUsers);
+        }
+        [HttpPost("add-user")]
+        public IActionResult AddUser([FromBody]UserViewModel model)
+        {
+            var validator = new UserValidator();
+            var result = validator.Validate(model);
+            if (result.IsValid)
+                return Ok();
+            return BadRequest(result.Errors);
         }
 
         [HttpPost]

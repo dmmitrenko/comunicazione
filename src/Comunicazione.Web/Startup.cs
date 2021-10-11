@@ -2,6 +2,8 @@ using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.EF;
 using Comunicazione.Infrastructure.Repositories;
 using Comunicazione.Infrastructure.UnitOfWork;
+using Comunicazione.Infrastructure.Validators.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +37,14 @@ namespace Comunicazione.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ValidationFilter());
+            })
+                .AddFluentValidation(options => 
+                {
+                    options.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
 
             // Configure AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
