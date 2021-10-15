@@ -14,6 +14,5 @@ namespace Comunicazione.Infrastructure.DTO
         public string Role { get; set; }
         public string Status { get; set; }
         public string Email { get; set; }
-        public List<PostViewModel> Posts { get; set; }
     }
 }

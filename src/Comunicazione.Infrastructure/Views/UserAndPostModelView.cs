@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Infrastructure.Views
+namespace Comunicazione.Infrastructure.DTO
 {
     public class UserAndPostModelView
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public Dictionary<int, List<PostViewModel>> UserPosts { get; set; }
+        public Dictionary<int, PostViewModel> UserPosts { get; set; }
     }
 }

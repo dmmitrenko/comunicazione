@@ -36,5 +36,11 @@ namespace Comunicazione.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("get-post-by-id")]
+        public IActionResult GetPostById([FromQuery] int id)
+        {
+            return Ok();
+        }
+
     }
 }

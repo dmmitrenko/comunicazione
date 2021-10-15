@@ -1,0 +1,50 @@
+﻿Advertising/Marketing
+Agriculture
+Arts and Entertainment
+Automotive, Aircraft and Boat
+Commercial and Industrial
+Education
+Finance
+Food and Beverage
+Hotel and Lodging
+Legal
+Local Service
+Media/News Company
+Medical and Health
+Non-Government Organization
+Nonprofit Organization
+Public and Government Services
+Real Estate
+Science, Technology and Engineering
+Travel and Transportation
+Armed Forces
+Charity Organization
+Community Service
+Country Club / Clubhouse
+Environmental Conservation Organization
+Labor Union
+Private Members Club
+Religious Organization
+Social Club
+Sorority and Fraternity
+Sports Club
+Youth Organization
+Art
+Book and Magazine
+Music
+Show
+TV and Movies
+ATM
+Campus Building
+City Infrastructure
+Landmark and Historical Places
+Meeting Room
+Politician
+Religious Place of Worship
+Residence
+Brand
+Cause
+Just for Fun
+Public Figure
+Model
+Writer
