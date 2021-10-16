@@ -26,14 +26,14 @@ namespace Comunicazione.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}", Name = "GetPopularUsers")]
+        [HttpGet("[action]/{count}")]
         public IActionResult GetPopularUsers(int count)
         {
             var popularUsers = _unitOfWork.Users.GetPopularUsers(count);
             return Ok(popularUsers);
         }
 
-        [HttpGet("{id}", Name = "GetUserById")]
+        [HttpGet("[action]/{id}")]
         public IActionResult GetUserById(int id)
         {
             var user = _unitOfWork.Users.GetById(id);
@@ -41,7 +41,7 @@ namespace Comunicazione.Web.Controllers
             return Ok(responce);
         }
 
-        [HttpGet("{id}", Name ="GetUserPosts")]
+        [HttpGet("[action]/{id}")]
         public IActionResult GetUserPosts(int id)
         {
             var user =_unitOfWork.Users.GetById(id);
@@ -51,7 +51,7 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
-        [HttpPost(Name = "AddUser")]
+        [HttpPost("[action]")]
         public IActionResult AddUser([FromBody]UserViewModel model)
         {
             var result = validator.Validate(model);
@@ -65,7 +65,7 @@ namespace Comunicazione.Web.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpDelete("{id}", Name = "DeleteUser")]
+        [HttpDelete("[action]/{id}")]
         public IActionResult DeleteUser(int id)
         {
             _unitOfWork.Users.Remove(_unitOfWork.Users.GetById(id));

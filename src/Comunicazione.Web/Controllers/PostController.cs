@@ -22,8 +22,8 @@ namespace Comunicazione.Web.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpPost("add-post")]
-        public IActionResult AddPost([FromQuery] int userId, [FromBody] PostViewModel model)
+        [HttpPost("[action]/{userId}")]
+        public IActionResult AddPost(int userId, [FromBody] PostViewModel model)
         {
             var author = _unitOfWork.Users.GetById(userId);
             var post = new Post()
@@ -36,8 +36,8 @@ namespace Comunicazione.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("get-post-by-id")]
-        public IActionResult GetPostById([FromQuery] int id)
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetPostById(int id)
         {
             return Ok();
         }
