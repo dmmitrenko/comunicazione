@@ -24,7 +24,9 @@ namespace Comunicazione.Core.Entities
         public DateTime DateCreated { get;  set; }
         public DateTime DateUpdated { get;  set; }
 
-        //Navigation prop
+        // Navigation properties
+        public ICollection<Follow> Follower { get; set; }
+        public ICollection<Follow> Followee { get; set; }
         public Address Address { get; set; }
         public  List<Post> Posts { get;  set; }
     }

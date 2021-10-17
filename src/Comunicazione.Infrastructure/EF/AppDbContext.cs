@@ -24,6 +24,21 @@ namespace Comunicazione.Infrastructure.EF
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<Follow>()
+                .HasKey(k => new { k.FollowerId, k.FolloweeId });
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(u => u.Followee)
+                .WithMany(u => u.Follower)
+                .HasForeignKey(u => u.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(u => u.Follower)
+                .WithMany(u => u.Followee)
+                .HasForeignKey(u => u.FolloweeId)
+                .OnDelete(DeleteBehavior.Restrict);
    
         }
 
