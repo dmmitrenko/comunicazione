@@ -17,6 +17,10 @@ namespace Comunicazione.Core.Entities
         public Post Post { get; set; }
         public int PostId { get; set; }
 
+        public List<Comment> Replies { get; set; }
+        public Comment ParentComment { get; set; }
+        public int? ParentCommentId { get; set; }
+
 
     }
 }

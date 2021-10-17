@@ -14,6 +14,18 @@ namespace Comunicazione.Infrastructure.EF
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.HasOne(x => x.ParentComment)
+                .WithMany(x => x.Replies)
+                .HasForeignKey(x => x.ParentCommentId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+   
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
