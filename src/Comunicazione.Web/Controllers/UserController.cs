@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Services;
 using Comunicazione.Infrastructure.DTO;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,27 +18,29 @@ namespace Comunicazione.Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
+        private IUserService _userService;
         private readonly IMapper _mapper;
-        public UserValidator validator = new UserValidator();
+        private readonly AbstractValidator<UserViewModel> _validator;
 
-        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, 
+            AbstractValidator<UserViewModel> validator)
         {
-            _unitOfWork = unitOfWork;
+            _userService = userService;
             _mapper = mapper;
+            _validator = validator;
         }
 
         [HttpGet("[action]/{count}")]
         public IActionResult GetPopularUsers(int count)
         {
-            var popularUsers = _unitOfWork.Users.GetPopularUsers(count);
-            return Ok(popularUsers);
+            var response = _userService.GetPopularUsers(count);
+            return Ok(response);
         }
 
         [HttpGet("[action]/{id}")]
         public IActionResult GetUserById(int id)
         {
-            var user = _unitOfWork.Users.GetById(id);
+            var user = _userService.GetUserById(id);
             var responce = _mapper.Map<UserViewModel>(user);
             return Ok(responce);
         }
@@ -44,22 +48,18 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetUserPosts(int id)
         {
-            var user = _unitOfWork.Users.GetById(id);
-            var posts = _unitOfWork.Posts.GetAll();
-            var response = UserService.GetUserPosts(user, posts);
-
+            var response = _userService.GetUserPosts(id);
             return Ok(response);
         }
 
         [HttpPost("[action]")]
         public IActionResult AddUser([FromBody] UserViewModel model)
         {
-            var result = validator.Validate(model);
+            var result = _validator.Validate(model);
             if (result.IsValid)
             {
                 var user = _mapper.Map<User>(model);
-                _unitOfWork.Users.Add(user);
-                _unitOfWork.Complete();
+                _userService.AddUser(user);
                 return Ok();
             }
             return BadRequest(result.Errors);
@@ -68,8 +68,7 @@ namespace Comunicazione.Web.Controllers
         [HttpDelete("[action]/{id}")]
         public IActionResult DeleteUser(int id)
         {
-            _unitOfWork.Users.Remove(_unitOfWork.Users.GetById(id));
-            _unitOfWork.Complete();
+            _userService.DeleteUser(id);
             return Ok();
         }
     }
