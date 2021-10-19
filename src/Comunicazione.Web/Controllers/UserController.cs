@@ -44,7 +44,7 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetUserPosts(int id)
         {
-            var user =_unitOfWork.Users.GetById(id);
+            var user = _unitOfWork.Users.GetById(id);
             var posts = _unitOfWork.Posts.GetAll();
             var response = UserService.GetUserPosts(user, posts);
 
@@ -52,7 +52,7 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddUser([FromBody]UserViewModel model)
+        public IActionResult AddUser([FromBody] UserViewModel model)
         {
             var result = validator.Validate(model);
             if (result.IsValid)

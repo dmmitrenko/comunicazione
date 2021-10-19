@@ -15,9 +15,12 @@ namespace Comunicazione.Infrastructure.Repositories
         {
            
         }
+
         public IEnumerable<User> GetPopularUsers(int count)
         {
             return _context.Users.OrderByDescending(d => d.DateCreated).ToList();
         }
+        
+        
     }
 }

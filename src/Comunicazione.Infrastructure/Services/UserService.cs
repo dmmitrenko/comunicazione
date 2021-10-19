@@ -5,12 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Comunicazione.Core.Entities;
+using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Services;
 using Comunicazione.Infrastructure.DTO;
 
 namespace Comunicazione.Infrastructure.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public UserService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
         public static UserAndPostModelView GetUserPosts(User user, IEnumerable<Post> posts )
         {
             var postsView = new Dictionary<int, PostViewModel>();

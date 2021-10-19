@@ -46,5 +46,6 @@ namespace Comunicazione.Infrastructure.EF
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Address> Adresses { get;set; }
+        public DbSet<Follow> Follow { get; set; }
     }
 }
