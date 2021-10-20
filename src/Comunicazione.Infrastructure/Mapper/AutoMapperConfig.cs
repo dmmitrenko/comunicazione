@@ -16,8 +16,6 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<User, UserViewModel>();
             CreateMap<Post, PostViewModel>();
             CreateMap<UserViewModel, User>();
-            CreateMap<UserViewModel, List<PostViewModel>>();
-            
         }
     }
 }

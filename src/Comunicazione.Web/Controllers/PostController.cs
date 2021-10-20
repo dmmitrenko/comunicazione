@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Services;
 using Comunicazione.Infrastructure.DTO;
 using Comunicazione.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -14,31 +15,26 @@ namespace Comunicazione.Web.Controllers
     [Route("api/[controller]")]
     public class PostController : Controller
     {
-        private IUnitOfWork _unitOfWork;
+        private IPostService _postService;
         private readonly IMapper _mapper;
-        public PostController(IMapper mapper, IUnitOfWork unitOfWork)
+        public PostController(IMapper mapper, IPostService postService)
         {
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
+            _postService = postService;
         }
 
         [HttpPost("[action]/{userId}")]
         public IActionResult AddPost(int userId, [FromBody] PostViewModel model)
         {
-            var author = _unitOfWork.Users.GetById(userId);
-            var post = new Post()
-            {
-                Content = model.Content,
-                User = author
-            };
-            _unitOfWork.Posts.Add(post);
-            _unitOfWork.Complete();
+            var post = _mapper.Map<Post>(model);
+            _postService.AddPost(userId, post);
             return Ok();
         }
 
         [HttpGet("[action]/{id}")]
         public IActionResult GetPostById(int id)
         {
+            _postService.GetById(id);
             return Ok();
         }
 

@@ -4,14 +4,16 @@ using Comunicazione.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Comunicazione.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211017151648_RepliesToCommentsMigration")]
+    partial class RepliesToCommentsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,21 +83,6 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Comunicazione.Core.Entities.Follow", b =>
-                {
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FolloweeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FollowerId", "FolloweeId");
-
-                    b.HasIndex("FolloweeId");
-
-                    b.ToTable("Follow");
                 });
 
             modelBuilder.Entity("Comunicazione.Core.Entities.Post", b =>
@@ -189,25 +176,6 @@ namespace Comunicazione.Infrastructure.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("Comunicazione.Core.Entities.Follow", b =>
-                {
-                    b.HasOne("Comunicazione.Core.Entities.User", "Follower")
-                        .WithMany("Followee")
-                        .HasForeignKey("FolloweeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Comunicazione.Core.Entities.User", "Followee")
-                        .WithMany("Follower")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Followee");
-
-                    b.Navigation("Follower");
-                });
-
             modelBuilder.Entity("Comunicazione.Core.Entities.Post", b =>
                 {
                     b.HasOne("Comunicazione.Core.Entities.User", "User")
@@ -227,10 +195,6 @@ namespace Comunicazione.Infrastructure.Migrations
             modelBuilder.Entity("Comunicazione.Core.Entities.User", b =>
                 {
                     b.Navigation("Address");
-
-                    b.Navigation("Followee");
-
-                    b.Navigation("Follower");
 
                     b.Navigation("Posts");
                 });
