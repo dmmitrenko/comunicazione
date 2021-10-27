@@ -1,6 +1,8 @@
 using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Services;
 using Comunicazione.Infrastructure.EF;
 using Comunicazione.Infrastructure.Repositories;
+using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.UnitOfWork;
 using Comunicazione.Infrastructure.Validators.Filters;
 using FluentValidation.AspNetCore;
@@ -58,6 +60,10 @@ namespace Comunicazione.Web
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IFollowRepository, FollowRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IFollowService, FollowService>();
+            
 
             services.AddSwaggerGen(c =>
             {

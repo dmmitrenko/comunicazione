@@ -20,14 +20,12 @@ namespace Comunicazione.Web.Controllers
     {
         private IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly AbstractValidator<UserViewModel> _validator;
 
-        public UserController(IUserService userService, IMapper mapper, 
-            AbstractValidator<UserViewModel> validator)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _validator = validator;
+            
         }
 
         [HttpGet("[action]/{count}")]
@@ -55,7 +53,9 @@ namespace Comunicazione.Web.Controllers
         [HttpPost("[action]")]
         public IActionResult AddUser([FromBody] UserViewModel model)
         {
-            var result = _validator.Validate(model);
+            var validator = new UserValidator();
+            var result = validator.Validate(model);
+            
             if (result.IsValid)
             {
                 var user = _mapper.Map<User>(model);
