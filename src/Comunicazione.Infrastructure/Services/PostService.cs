@@ -20,12 +20,13 @@ namespace Comunicazione.Infrastructure.Services
 
         public void AddPost(int userId, Post post)
         {
-            throw new NotImplementedException();
+            post.UserId = userId;
+            _unitOfWork.Posts.Add(post);
+            _unitOfWork.Complete();
         }
 
         public Post GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+            => _unitOfWork.Posts.GetById(id);
+        
     }
 }

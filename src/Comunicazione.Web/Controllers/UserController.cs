@@ -31,7 +31,8 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{count}")]
         public IActionResult GetPopularUsers(int count)
         {
-            var response = _userService.GetPopularUsers(count);
+            var users = _userService.GetPopularUsers(count);
+            var response = _mapper.Map<List<UserViewModel>>(users);
             return Ok(response);
         }
 

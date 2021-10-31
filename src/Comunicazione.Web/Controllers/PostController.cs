@@ -24,7 +24,7 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPost("[action]/{userId}")]
-        public IActionResult AddPost(int userId, [FromBody] PostViewModel model)
+        public IActionResult AddPost(int userId, [FromBody] PostAddModel model)
         {
             var post = _mapper.Map<Post>(model);
             _postService.AddPost(userId, post);
@@ -34,8 +34,9 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetPostById(int id)
         {
-            _postService.GetById(id);
-            return Ok();
+            var model = _postService.GetById(id);
+            var response = _mapper.Map<PostViewModel>(model);
+            return Ok(response);
         }
 
     }

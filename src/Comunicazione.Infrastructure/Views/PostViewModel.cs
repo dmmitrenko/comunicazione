@@ -10,6 +10,11 @@ namespace Comunicazione.Infrastructure.DTO
     public class PostViewModel
     {
         public string Content { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public int UserId { get; set; }
+    }
+
+    public class PostAddModel
+    {
+        public string Content { get; set; }
     }
 }
