@@ -9,6 +9,7 @@ namespace Comunicazione.Core.Repositories
 {
     public interface IFollowRepository : IGenericRepository<Follow>
     {
-        Follow GetSubscriptions(int userId, int recipientId);
+        Follow GetFollow(int userId, int recipientId);
+        public IEnumerable<User> GetFollowers(int userId);
     }
 }

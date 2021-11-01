@@ -1,6 +1,7 @@
 ﻿using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,20 @@ namespace Comunicazione.Infrastructure.Repositories
 
         }
 
-        public Follow GetSubscriptions(int userId, int recipientId)
+        public Follow GetFollow(int userId, int recipientId)
         {
-           return _context.Follow.FirstOrDefault(u => u.FollowerId == userId &&
-                                                      u.FolloweeId == recipientId);
+            return _context.Follow
+                .FirstOrDefault(u => u.FollowerId == userId &&
+                                          u.FolloweeId == recipientId);
         }
+
+        public IEnumerable<User> GetFollowers(int userId)
+        {
+            var followers = _context.Follow.Where(u => u.FolloweeId == userId)
+                .Select(item => item.Followee).ToList();
+            
+            return followers;
+        }
+        
     }
 }

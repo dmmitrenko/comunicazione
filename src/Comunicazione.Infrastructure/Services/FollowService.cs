@@ -1,4 +1,5 @@
-﻿using Comunicazione.Core.Repositories;
+﻿using Comunicazione.Core.Entities;
+using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,30 @@ namespace Comunicazione.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public bool CheckFollow(int userId, int recipientId)
-        {
-            var follow = _unitOfWork.Follows.GetSubscriptions(userId, recipientId);
+        public Follow GetFollow(int userId, int recipientId) 
+            => _unitOfWork.Follows.GetFollow(userId, recipientId);
 
-            if (follow != null)
-                return true;
-            return false;
+        public void FollowUser(int id, int recipientId)
+        {
+            Follow follow = new Follow()
+            {
+                FollowerId = id,
+                FolloweeId = recipientId
+            };
+
+            _unitOfWork.Follows.Add(follow);
+            _unitOfWork.Complete(); 
+        }
+
+        public IEnumerable<User> GetFollowers(int userId) 
+            => _unitOfWork.Follows.GetFollowers(userId);
+            
+        
+        
+
+        public IEnumerable<User> GetSubscriptions(int userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

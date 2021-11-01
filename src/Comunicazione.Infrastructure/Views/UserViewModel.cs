@@ -15,4 +15,10 @@ namespace Comunicazione.Infrastructure.DTO
         public string Status { get; set; }
         public string Email { get; set; }
     }
+
+    public class UserFullNameModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
 }

@@ -1,4 +1,6 @@
-﻿using Comunicazione.Core.Services;
+﻿using AutoMapper;
+using Comunicazione.Core.Services;
+using Comunicazione.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,13 +12,33 @@ namespace Comunicazione.Web.Controllers
     public class FollowController : Controller
     {
         private readonly IFollowService _followService;
-        public FollowController(IFollowService followService)
+        private readonly IMapper _mapper;
+        public FollowController(IFollowService followService, IMapper mapper)
         {
             _followService = followService;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        
+        [HttpPost("{id}/follow/{recipientId}")]
+        public IActionResult FollowUser(int id, int recipientId)
         {
-            return View();
+            _followService.FollowUser(id, recipientId);
+            return Ok();
+        }
+
+        [HttpGet("{userId}/followers")]
+        public IActionResult GetFollowers(int userId)
+        {
+            var followers = _followService.GetFollowers(userId);
+            var response = _mapper.Map<List<UserFullNameModel>>(followers);
+            return Ok(response);
+        }
+
+        [HttpGet("{userId}/subscriptions")]
+        public IActionResult GetSubscriptions(int userId)
+        {
+            var subscriptions = _followService.GetSubscriptions(userId);
+            return Ok(subscriptions);
         }
     }
 }
