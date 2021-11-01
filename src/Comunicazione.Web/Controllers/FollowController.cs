@@ -38,7 +38,8 @@ namespace Comunicazione.Web.Controllers
         public IActionResult GetSubscriptions(int userId)
         {
             var subscriptions = _followService.GetSubscriptions(userId);
-            return Ok(subscriptions);
+            var response = _mapper.Map<List<UserFullNameModel>>(subscriptions);
+            return Ok(response);
         }
     }
 }

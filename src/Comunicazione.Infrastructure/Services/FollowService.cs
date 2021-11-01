@@ -34,13 +34,10 @@ namespace Comunicazione.Infrastructure.Services
 
         public IEnumerable<User> GetFollowers(int userId) 
             => _unitOfWork.Follows.GetFollowers(userId);
-            
-        
-        
+
 
         public IEnumerable<User> GetSubscriptions(int userId)
-        {
-            throw new NotImplementedException();
-        }
+            => _unitOfWork.Follows.GetSubscriptions(userId);
+       
     }
 }

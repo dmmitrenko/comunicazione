@@ -31,6 +31,13 @@ namespace Comunicazione.Infrastructure.Repositories
             
             return followers;
         }
-        
+
+        public IEnumerable<User> GetSubscriptions(int userId)
+        {
+            var subscriptions = _context.Follow.Where(u => u.FollowerId == userId)
+                .Select(item => item.Follower).ToList();
+            
+            return subscriptions;
+        }
     }
 }

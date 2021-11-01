@@ -11,5 +11,6 @@ namespace Comunicazione.Core.Repositories
     {
         Follow GetFollow(int userId, int recipientId);
         public IEnumerable<User> GetFollowers(int userId);
+        public IEnumerable<User> GetSubscriptions(int userId);
     }
 }
