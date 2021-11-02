@@ -41,6 +41,7 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetUserById(int id)
         {
+            throw new Exception("OK!");
             var user = _userService.GetUserById(id);
             var responce = _mapper.Map<UserViewModel>(user);
             return Ok(responce);
