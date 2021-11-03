@@ -2,7 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Views;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.Validators;
 using FluentValidation;
@@ -34,27 +34,7 @@ namespace Comunicazione.Web.Controllers
         public IActionResult GetPopularUsers(int count)
         {
             var users = _userService.GetPopularUsers(count);
-            var response = _mapper.Map<List<UserViewModelForCreation>>(users);
-            return Ok(response);
-        }
-
-        [HttpGet("[action]/{id}")]
-        public IActionResult GetUserById(int id)
-        {
-            var user = _userService.GetUserById(id);
-            if (user == null)
-            {
-                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
-                return BadRequest($"User with id: {id} doesn't exist in the database");
-            }
-            var response = _mapper.Map<UserViewModelForCreation>(user);
-            return Ok(response);
-        }
-
-        [HttpGet("[action]/{id}")]
-        public IActionResult GetUserPosts(int id)
-        {
-            var response = _userService.GetUserPosts(id);
+            var response = _mapper.Map<List<UserCountFollowersModel>>(users);
             return Ok(response);
         }
 

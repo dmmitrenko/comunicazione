@@ -12,7 +12,6 @@ namespace Comunicazione.Core.Entities
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
-            Password = "Ytrwq9I";
         }
         public int UserId { get;  set; }
         public string Email { get;  set; }
@@ -25,8 +24,8 @@ namespace Comunicazione.Core.Entities
         public DateTime DateUpdated { get;  set; }
 
         // Navigation properties
-        public ICollection<Follow> Follower { get; set; }
-        public ICollection<Follow> Followee { get; set; }
+        public IEnumerable<Follow> Follower { get; set; }
+        public IEnumerable<Follow> Followee { get; set; }
         public Address Address { get; set; }
         public  List<Post> Posts { get;  set; }
     }

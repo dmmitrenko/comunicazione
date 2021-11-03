@@ -2,7 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Views;
 using Comunicazione.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Views;
 
 namespace Comunicazione.Infrastructure.Services
 {
@@ -46,12 +46,5 @@ namespace Comunicazione.Infrastructure.Services
 
         public User GetUserById(int id)
             => _unitOfWork.Users.GetById(id);
-
-        public IEnumerable<Post> GetUserPosts(int id)
-        {
-            var postsView = new Dictionary<User, IEnumerable<Post>>();
-            throw new NotImplementedException();
-        }
-
     }
 }

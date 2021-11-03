@@ -1,5 +1,5 @@
 ﻿using Comunicazione.Core.Entities;
-using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Views;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Infrastructure.DTO
+namespace Comunicazione.Infrastructure.Views
 {
     public class UserViewModelForCreation
     {
@@ -17,9 +17,4 @@ namespace Comunicazione.Infrastructure.DTO
         public string Password { get; set; }
     }
 
-    public class UserFullNameModel
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
 }

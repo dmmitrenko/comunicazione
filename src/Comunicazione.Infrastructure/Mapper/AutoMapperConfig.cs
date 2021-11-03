@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
-using Comunicazione.Infrastructure.DTO;
+using Comunicazione.Infrastructure.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,8 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<UserViewModelForCreation, User>();
             CreateMap<PostAddModel, Post>();
             CreateMap<User, UserFullNameModel>();
+            CreateMap<User, UserCountFollowersModel>()
+                .ForMember(item => item.Followers, opt => opt.MapFrom(src => src.Follower.Count()));
         }
     }
 }

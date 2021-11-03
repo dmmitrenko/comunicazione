@@ -1,11 +1,11 @@
-﻿using Comunicazione.Infrastructure.DTO;
+﻿using Comunicazione.Infrastructure.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Infrastructure.DTO
+namespace Comunicazione.Infrastructure.Views
 {
     public class UserAndPostModelView
     {
