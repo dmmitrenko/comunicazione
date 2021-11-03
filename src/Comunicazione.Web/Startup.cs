@@ -5,6 +5,7 @@ using Comunicazione.Infrastructure.Repositories;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.UnitOfWork;
 using Comunicazione.Infrastructure.Validators.Filters;
+using Comunicazione.Web.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,8 +17,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +32,8 @@ namespace Comunicazione.Web
 
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
+                "/nlog.config"));
             Configuration = configuration;
             ConnectionString = Configuration.GetConnectionString("DefaultConnectionString");
         }
@@ -38,6 +43,7 @@ namespace Comunicazione.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureLoggerService();
             services.AddControllers();
             services.AddMvc(options =>
             {
@@ -72,7 +78,8 @@ namespace Comunicazione.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -80,6 +87,8 @@ namespace Comunicazione.Web
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Comunicazione.Web v1"));
             }
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseHttpsRedirection();
 

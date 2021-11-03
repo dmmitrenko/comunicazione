@@ -20,12 +20,14 @@ namespace Comunicazione.Web.Controllers
     {
         private IUserService _userService;
         private readonly IMapper _mapper;
+        private ILoggerManager _logger;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper,
+            ILoggerManager logger)
         {
             _userService = userService;
             _mapper = mapper;
-            
+            _logger = logger;  
         }
 
         [HttpGet("[action]/{count}")]
@@ -39,6 +41,7 @@ namespace Comunicazione.Web.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult GetUserById(int id)
         {
+            throw new Exception("OK!");
             var user = _userService.GetUserById(id);
             var responce = _mapper.Map<UserViewModel>(user);
             return Ok(responce);
