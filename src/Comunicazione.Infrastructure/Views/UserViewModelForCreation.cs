@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Infrastructure.DTO
 {
-    public class UserViewModel
+    public class UserViewModelForCreation
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
         public string Status { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
     }
 
     public class UserFullNameModel

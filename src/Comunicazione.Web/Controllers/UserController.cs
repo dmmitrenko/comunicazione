@@ -27,14 +27,14 @@ namespace Comunicazione.Web.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-            _logger = logger;  
+            _logger = logger;
         }
 
         [HttpGet("[action]/{count}")]
         public IActionResult GetPopularUsers(int count)
         {
             var users = _userService.GetPopularUsers(count);
-            var response = _mapper.Map<List<UserViewModel>>(users);
+            var response = _mapper.Map<List<UserViewModelForCreation>>(users);
             return Ok(response);
         }
 
@@ -42,7 +42,7 @@ namespace Comunicazione.Web.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _userService.GetUserById(id);
-            var responce = _mapper.Map<UserViewModel>(user);
+            var responce = _mapper.Map<UserViewModelForCreation>(user);
             return Ok(responce);
         }
 
@@ -54,7 +54,7 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddUser([FromBody] UserViewModel model)
+        public IActionResult AddUser([FromBody] UserViewModelForCreation model)
         {
             var validator = new UserValidator();
             var result = validator.Validate(model);
@@ -65,6 +65,7 @@ namespace Comunicazione.Web.Controllers
                 _userService.AddUser(user);
                 return Ok();
             }
+            _logger.LogError("Wrong data format");
             return BadRequest(result.Errors);
         }
 
