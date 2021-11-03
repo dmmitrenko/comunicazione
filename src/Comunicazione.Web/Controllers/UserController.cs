@@ -42,8 +42,13 @@ namespace Comunicazione.Web.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _userService.GetUserById(id);
-            var responce = _mapper.Map<UserViewModelForCreation>(user);
-            return Ok(responce);
+            if (user == null)
+            {
+                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
+                return BadRequest($"User with id: {id} doesn't exist in the database");
+            }
+            var response = _mapper.Map<UserViewModelForCreation>(user);
+            return Ok(response);
         }
 
         [HttpGet("[action]/{id}")]
