@@ -14,6 +14,7 @@ namespace Comunicazione.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -27,8 +28,17 @@ namespace Comunicazione.Infrastructure.Services
 
         public void DeleteUser(int id)
         {
-            _unitOfWork.Users.Remove(GetUserById(id));
-            _unitOfWork.Complete();
+            var user = GetUserById(id);
+         
+            try
+            {
+                _unitOfWork.Users.Remove(user);
+                _unitOfWork.Complete();
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException();
+            }   
         }
 
         public IEnumerable<User> GetPopularUsers(int count)
@@ -36,6 +46,7 @@ namespace Comunicazione.Infrastructure.Services
 
         public User GetUserById(int id)
             => _unitOfWork.Users.GetById(id);
+
         public IEnumerable<Post> GetUserPosts(int id)
         {
             var postsView = new Dictionary<User, IEnumerable<Post>>();

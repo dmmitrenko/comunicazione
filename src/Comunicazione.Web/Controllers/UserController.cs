@@ -72,8 +72,16 @@ namespace Comunicazione.Web.Controllers
         [HttpDelete("[action]/{id}")]
         public IActionResult DeleteUser(int id)
         {
-            _userService.DeleteUser(id);
-            return Ok();
+            try
+            {
+                _userService.DeleteUser(id);
+                return Ok();
+            }
+            catch (ArgumentNullException)
+            {
+                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
+                return BadRequest($"User with id: {id} doesn't exist in the database");
+            }
         }
     }
 }
