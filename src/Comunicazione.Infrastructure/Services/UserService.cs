@@ -46,5 +46,15 @@ namespace Comunicazione.Infrastructure.Services
 
         public User GetUserById(int id)
             => _unitOfWork.Users.GetById(id);
+
+        public void UpdateInformation(int id, User information)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePassword(int id, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

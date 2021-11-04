@@ -11,6 +11,9 @@ namespace Comunicazione.Core.Services
     {
         IEnumerable<User> GetPopularUsers(int count);
         void AddUser(User user);
+        User GetUserById(int id);
         void DeleteUser(int id);
+        void UpdatePassword(int id, string password);
+        void UpdateInformation(int id, User user);
     }
 }

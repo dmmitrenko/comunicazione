@@ -38,6 +38,19 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userService.GetUserById(id);
+            if (user == null)
+            {
+                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
+                return BadRequest($"User with id: {id} doesn't exist in the database");
+            }
+            var response = _mapper.Map<UserViewModelForCreation>(user);
+            return Ok(response);
+        }
+
         [HttpPost("[action]")]
         public IActionResult AddUser([FromBody] UserViewModelForCreation model)
         {
@@ -52,6 +65,14 @@ namespace Comunicazione.Web.Controllers
             }
             _logger.LogError("Wrong data format");
             return BadRequest(result.Errors);
+        }
+
+        [HttpPut("[action]/{id}")]
+        public IActionResult UpgdatePassword(int id, [FromBody] string password)
+        {
+            _userService.UpdatePassword(id, password);
+            return Ok();
+
         }
 
         [HttpDelete("[action]/{id}")]
