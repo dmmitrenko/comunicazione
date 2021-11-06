@@ -14,10 +14,12 @@ namespace Comunicazione.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        
-        public UserService(IUnitOfWork unitOfWork)
+        private ILoggerManager _logger;
+
+        public UserService(IUnitOfWork unitOfWork, ILoggerManager logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public void AddUser(User user)
@@ -37,7 +39,8 @@ namespace Comunicazione.Infrastructure.Services
             }
             catch (ArgumentNullException)
             {
-                throw new ArgumentNullException();
+                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
+                throw new ArgumentNullException($"User with id: {id} doesn't exist in the database");
             }   
         }
 

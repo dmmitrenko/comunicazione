@@ -20,14 +20,11 @@ namespace Comunicazione.Web.Controllers
     {
         private IUserService _userService;
         private readonly IMapper _mapper;
-        private ILoggerManager _logger;
 
-        public UserController(IUserService userService, IMapper mapper,
-            ILoggerManager logger)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _logger = logger;
         }
 
         [HttpGet("[action]/{count}")]
@@ -44,9 +41,9 @@ namespace Comunicazione.Web.Controllers
             var user = _userService.GetUserById(id);
             if (user == null)
             {
-                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
-                return BadRequest($"User with id: {id} doesn't exist in the database");
+                return NotFound($"User with id: {id} doesn't exist in the database");
             }
+
             var response = _mapper.Map<UserViewModelForCreation>(user);
             return Ok(response);
         }
@@ -63,7 +60,7 @@ namespace Comunicazione.Web.Controllers
                 _userService.AddUser(user);
                 return Ok();
             }
-            _logger.LogError("Wrong data format");
+            
             return BadRequest(result.Errors);
         }
 
@@ -78,16 +75,8 @@ namespace Comunicazione.Web.Controllers
         [HttpDelete("[action]/{id}")]
         public IActionResult DeleteUser(int id)
         {
-            try
-            {
-                _userService.DeleteUser(id);
-                return Ok();
-            }
-            catch (ArgumentNullException)
-            {
-                _logger.LogInfo($"User with id: {id} doesn't exist in the database");
-                return BadRequest($"User with id: {id} doesn't exist in the database");
-            }
+            _userService.DeleteUser(id);
+            return Ok();
         }
     }
 }

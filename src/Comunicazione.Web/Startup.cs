@@ -88,7 +88,7 @@ namespace Comunicazione.Web
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Comunicazione.Web v1"));
             }
 
-            app.ConfigureExceptionHandler(logger);
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 
