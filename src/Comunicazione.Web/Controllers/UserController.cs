@@ -67,9 +67,16 @@ namespace Comunicazione.Web.Controllers
         [HttpPut("[action]/{id}")]
         public IActionResult UpdateInformation(int id, [FromBody] UserViewModelForCreation information)
         {
-            _userService.UpdateInformation(id, information);
-            return Ok();
+            var validator = new UserValidator();
+            var result = validator.Validate(information);
+            if (result.IsValid)
+            {
+                _userService.UpdateInformation(id, information);
+                return Ok();
 
+            }
+
+            return BadRequest(result.Errors);
         }
 
         [HttpDelete("[action]/{id}")]
