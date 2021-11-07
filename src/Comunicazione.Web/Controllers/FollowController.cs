@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.Views;
+using Comunicazione.Core.Views;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

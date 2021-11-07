@@ -10,8 +10,7 @@ namespace Comunicazione.Core.Entities
     {
         public User()
         {
-            DateCreated = DateTime.Now;
-            DateUpdated = DateTime.Now;
+            DateCreated = DateTime.Now; 
         }
         public int UserId { get;  set; }
         public string Email { get;  set; }

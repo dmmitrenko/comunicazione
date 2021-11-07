@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.Views;
+using Comunicazione.Core.Views;
 
 namespace Comunicazione.Infrastructure.Services
 {
@@ -50,14 +50,10 @@ namespace Comunicazione.Infrastructure.Services
         public User GetUserById(int id)
             => _unitOfWork.Users.GetById(id);
 
-        public void UpdateInformation(int id, User information)
+        public void UpdateInformation(int id, UserViewModelForCreation updateUser)
         {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePassword(int id, string password)
-        {
-            throw new NotImplementedException();
+            _unitOfWork.Users.UpdateUser(id, updateUser);
+            _unitOfWork.Complete();
         }
     }
 }

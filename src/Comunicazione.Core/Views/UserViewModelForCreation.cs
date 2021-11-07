@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Infrastructure.Views
+namespace Comunicazione.Core.Views
 {
     public class UserViewModelForCreation
     {
@@ -15,6 +15,8 @@ namespace Comunicazione.Infrastructure.Views
         public string Status { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+
+        public DateTime DateUpdated { get { return DateTime.Now; } }
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
-using Comunicazione.Infrastructure.Views;
+using Comunicazione.Core.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

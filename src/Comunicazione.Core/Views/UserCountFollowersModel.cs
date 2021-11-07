@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Infrastructure.Views
+namespace Comunicazione.Core.Views
 {
     public class UserCountFollowersModel
     {

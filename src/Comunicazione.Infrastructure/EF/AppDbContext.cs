@@ -14,6 +14,7 @@ namespace Comunicazione.Infrastructure.EF
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Comment>(entity =>

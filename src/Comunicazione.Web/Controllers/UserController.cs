@@ -2,7 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Infrastructure.Views;
+using Comunicazione.Core.Views;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.Validators;
 using FluentValidation;
@@ -65,9 +65,9 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPut("[action]/{id}")]
-        public IActionResult UpgdatePassword(int id, [FromBody] string password)
+        public IActionResult UpdateInformation(int id, [FromBody] UserViewModelForCreation information)
         {
-            _userService.UpdatePassword(id, password);
+            _userService.UpdateInformation(id, information);
             return Ok();
 
         }

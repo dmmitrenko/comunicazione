@@ -1,4 +1,5 @@
 ﻿using Comunicazione.Core.Entities;
+using Comunicazione.Core.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace Comunicazione.Core.Services
         void AddUser(User user);
         User GetUserById(int id);
         void DeleteUser(int id);
-        void UpdatePassword(int id, string password);
-        void UpdateInformation(int id, User user);
+        void UpdateInformation(int id, UserViewModelForCreation user);
     }
 }
