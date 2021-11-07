@@ -38,6 +38,11 @@ namespace Comunicazione.Infrastructure.Services
 
         public IEnumerable<User> GetSubscriptions(int userId)
             => _unitOfWork.Follows.GetSubscriptions(userId);
-       
+
+        public void DeleteSubscription(Follow follow)
+        {
+            _unitOfWork.Follows.Remove(follow);
+            _unitOfWork.Complete();
+        }
     }
 }

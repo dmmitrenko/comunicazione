@@ -18,7 +18,7 @@ namespace Comunicazione.Web.Controllers
             _followService = followService;
             _mapper = mapper;
         }
-        
+
         [HttpPost("{id}/follow/{recipientId}")]
         public IActionResult FollowUser(int id, int recipientId)
         {
@@ -41,5 +41,8 @@ namespace Comunicazione.Web.Controllers
             var response = _mapper.Map<List<UserFullNameModel>>(subscriptions);
             return Ok(response);
         }
+
+        [HttpDelete("[action]")]
+        public IActionResult DeleteSubscription(int )
     }
 }

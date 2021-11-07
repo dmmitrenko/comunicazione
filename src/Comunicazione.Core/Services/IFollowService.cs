@@ -13,5 +13,6 @@ namespace Comunicazione.Core.Services
         void FollowUser(int userId, int recipientId);
         IEnumerable<User> GetFollowers(int userId);
         IEnumerable<User> GetSubscriptions(int userId);
+        void DeleteSubscription(Follow follow);
     }
 }
