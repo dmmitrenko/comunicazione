@@ -10,7 +10,9 @@ namespace Comunicazione.Core.Views
     public class PostViewModel
     {
         public string Content { get; set; }
-        public int UserId { get; set; }
+        public string DateUpdated { get; set; }
+        public UserFullNameModel Author { get; set; }
+        
     }
 
     public class PostAddModel

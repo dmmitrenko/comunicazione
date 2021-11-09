@@ -25,8 +25,21 @@ namespace Comunicazione.Infrastructure.Services
             _unitOfWork.Complete();
         }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Post GetById(int id)
             => _unitOfWork.Posts.GetById(id);
+
+        public IEnumerable<Post> GetUserPosts(int userId)
+            => _unitOfWork.Posts.GetUserPosts(userId);
         
     }
 }

@@ -39,5 +39,13 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetUserPosts(int id)
+        {
+            var userPosts = _postService.GetUserPosts(id);
+            var response = _mapper.Map<IEnumerable<PostViewModel>>(userPosts);
+            return Ok(response);
+        }
+
     }
 }

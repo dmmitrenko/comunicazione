@@ -1,6 +1,8 @@
 ﻿using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Views;
 using Comunicazione.Infrastructure.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,15 @@ namespace Comunicazione.Infrastructure.Repositories
         {
 
         }
+
+        public void Edit(int id, PostAddModel updatePost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Post> GetUserPosts(int id)
+            => _context.Posts.Include(b => b.User).Where(item => item.UserId == id);
+            
+        
     }
 }

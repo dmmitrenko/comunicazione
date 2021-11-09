@@ -11,5 +11,9 @@ namespace Comunicazione.Core.Services
     {
         void AddPost(int userId, Post post);
         Post GetById(int id);
+        void Delete(int id);
+        void Edit(int id);
+        IEnumerable<Post> GetUserPosts(int userId);
+
     }
 }
