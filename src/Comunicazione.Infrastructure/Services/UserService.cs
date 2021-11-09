@@ -22,6 +22,12 @@ namespace Comunicazione.Infrastructure.Services
             _logger = logger;
         }
 
+        public void AddRange(IEnumerable<User> users)
+        {
+            _unitOfWork.Users.AddRange(users);
+            _unitOfWork.Complete();
+        }
+
         public void AddUser(User user)
         {
             _unitOfWork.Users.Add(user);

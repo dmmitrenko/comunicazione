@@ -15,5 +15,6 @@ namespace Comunicazione.Core.Services
         User GetUserById(int id);
         void DeleteUser(int id);
         void UpdateInformation(int id, UserViewModelForCreation user);
+        void AddRange(IEnumerable<User> users);
     }
 }

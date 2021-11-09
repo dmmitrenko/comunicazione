@@ -47,6 +47,23 @@ namespace Comunicazione.Web.Controllers
             var response = _mapper.Map<UserViewModelForCreation>(user);
             return Ok(response);
         }
+        [HttpPost("[action]")]
+        public IActionResult AddRange([FromBody] IEnumerable<UserViewModelForCreation> users)
+        {
+            var validator = new UserValidator();
+            foreach(var item in users)
+            {
+                var result = validator.Validate(item);
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+
+            var newUsers = _mapper.Map<IEnumerable<User>>(users);
+            _userService.AddRange(newUsers);
+            return Ok();
+        }
 
         [HttpPost("[action]")]
         public IActionResult AddUser([FromBody] UserViewModelForCreation model)
