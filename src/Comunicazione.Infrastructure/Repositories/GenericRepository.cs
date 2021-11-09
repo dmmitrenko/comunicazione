@@ -45,5 +45,9 @@ namespace Comunicazione.Infrastructure.Repositories
         {
             _context.Set<T>().RemoveRange(entities);
         }
+        public void Update(T entity, object updateOptions)
+        {
+            _context.Entry(entity).CurrentValues.SetValues(updateOptions);
+        }
     }
 }

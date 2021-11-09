@@ -20,7 +20,6 @@ namespace Comunicazione.Infrastructure.UnitOfWork
             Follows = new FollowRepository(_context);
         }
         public IUserRepository Users { get; private set; }
-
         public IPostRepository Posts { get; private set; }
         public IFollowRepository Follows { get; private set; }
 

@@ -32,16 +32,14 @@ namespace Comunicazione.Infrastructure.Services
         {
             var user = GetUserById(id);
          
-            try
-            {
-                _unitOfWork.Users.Remove(user);
-                _unitOfWork.Complete();
-            }
-            catch (ArgumentNullException)
+            if(user == null)
             {
                 _logger.LogInfo($"User with id: {id} doesn't exist in the database");
                 throw new ArgumentNullException($"User with id: {id} doesn't exist in the database");
-            }   
+            }
+
+            _unitOfWork.Users.Remove(user);
+            _unitOfWork.Complete();   
         }
 
         public IEnumerable<User> GetPopularUsers(int count)
@@ -52,7 +50,8 @@ namespace Comunicazione.Infrastructure.Services
 
         public void UpdateInformation(int id, UserViewModelForCreation updateUser)
         {
-            _unitOfWork.Users.UpdateUser(id, updateUser);
+            var user = _unitOfWork.Users.GetById(id);
+            _unitOfWork.Users.Update(user, updateUser);
             _unitOfWork.Complete();
         }
     }

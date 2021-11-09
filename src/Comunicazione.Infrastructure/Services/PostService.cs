@@ -35,7 +35,8 @@ namespace Comunicazione.Infrastructure.Services
 
         public void Edit(int id, PostEditModel updatePost)
         {
-            _unitOfWork.Posts.Edit(id, updatePost);
+            var post = _unitOfWork.Posts.GetById(id);
+            _unitOfWork.Posts.Update(post, updatePost);
             _unitOfWork.Complete();
         }
 
