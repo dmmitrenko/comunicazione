@@ -18,9 +18,15 @@ namespace Comunicazione.Infrastructure.Repositories
 
         }
 
-        public void Edit(int id, PostAddModel updatePost)
+        public void Edit(int id, PostEditModel updatePost)
         {
-            throw new NotImplementedException();
+            var entity = _context.Posts.Find(id);
+            if (entity == null)
+            {
+                return;
+            }
+
+            _context.Entry(entity).CurrentValues.SetValues(updatePost);
         }
 
         public IEnumerable<Post> GetUserPosts(int id)

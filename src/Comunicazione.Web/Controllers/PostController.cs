@@ -24,7 +24,7 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPost("[action]/{userId}")]
-        public IActionResult AddPost(int userId, [FromBody] PostAddModel model)
+        public IActionResult AddPost(int userId, [FromBody] PostEditModel model)
         {
             var post = _mapper.Map<Post>(model);
             _postService.AddPost(userId, post);
@@ -47,5 +47,12 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
+        [HttpPut("[action]/{id}")]
+        public IActionResult EditPost(int id, [FromBody] PostEditModel information)
+        {
+            _postService.Edit(id, information);
+            return Ok();
+            
+        }
     }
 }

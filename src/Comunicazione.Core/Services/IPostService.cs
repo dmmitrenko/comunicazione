@@ -1,4 +1,5 @@
 ﻿using Comunicazione.Core.Entities;
+using Comunicazione.Core.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Comunicazione.Core.Services
         void AddPost(int userId, Post post);
         Post GetById(int id);
         void Delete(int id);
-        void Edit(int id);
+        void Edit(int id, PostEditModel post);
         IEnumerable<Post> GetUserPosts(int userId);
 
     }

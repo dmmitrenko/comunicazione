@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
+using Comunicazione.Core.Views;
 
 namespace Comunicazione.Infrastructure.Services
 {
@@ -30,9 +31,10 @@ namespace Comunicazione.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public void Edit(int id)
+        public void Edit(int id, PostEditModel updatePost)
         {
-            throw new NotImplementedException();
+            _unitOfWork.Posts.Edit(id, updatePost);
+            _unitOfWork.Complete();
         }
 
         public Post GetById(int id)
