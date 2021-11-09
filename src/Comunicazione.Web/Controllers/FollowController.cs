@@ -43,6 +43,11 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpDelete("[action]")]
-        public IActionResult DeleteSubscription(int )
+        public IActionResult DeleteSubscription([FromBody] int followerId, [FromBody] int followeeId)
+        {
+            var follow = _followService.GetFollow(followerId, followeeId);
+            _followService.DeleteSubscription(follow);
+            return Ok();
+        }
     }
 }
