@@ -28,7 +28,9 @@ namespace Comunicazione.Infrastructure.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var post = _unitOfWork.Posts.GetById(id);
+            _unitOfWork.Posts.Remove(post);
+            _unitOfWork.Complete();
         }
 
         public void Edit(int id, PostEditModel updatePost)

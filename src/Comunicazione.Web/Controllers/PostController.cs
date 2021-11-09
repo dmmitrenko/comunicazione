@@ -52,7 +52,13 @@ namespace Comunicazione.Web.Controllers
         {
             _postService.Edit(id, information);
             return Ok();
-            
+        }
+
+        [HttpDelete("[action]/{id}")]
+        public IActionResult DeletePost(int id)
+        {
+            _postService.Delete(id);
+            return Ok();
         }
     }
 }
