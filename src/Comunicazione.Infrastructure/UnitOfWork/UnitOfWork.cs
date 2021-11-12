@@ -18,10 +18,12 @@ namespace Comunicazione.Infrastructure.UnitOfWork
             Users = new UserRepository(_context);
             Posts = new PostRepository(_context);
             Follows = new FollowRepository(_context);
+            Comments = new CommentRepository(_context);
         }
         public IUserRepository Users { get; private set; }
         public IPostRepository Posts { get; private set; }
         public IFollowRepository Follows { get; private set; }
+        public ICommentRepository Comments { get; private set; }
 
         public int Complete()
         {
