@@ -20,6 +20,7 @@ namespace Comunicazione.Core.Entities
 
 
         // Navigation prop
+        public IEnumerable<Comment> Comments { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
     }

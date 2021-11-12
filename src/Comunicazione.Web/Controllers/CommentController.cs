@@ -8,7 +8,7 @@ namespace Comunicazione.Web.Controllers
 {
     public class CommentController : Controller
     {
-        public IActionResult Index()
+        public IActionResult AddComment(int userId, int postId)
         {
             return View();
         }

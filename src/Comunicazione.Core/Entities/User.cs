@@ -25,7 +25,8 @@ namespace Comunicazione.Core.Entities
         // Navigation properties
         public IEnumerable<Follow> Follower { get; set; }
         public IEnumerable<Follow> Followee { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
         public Address Address { get; set; }
-        public  List<Post> Posts { get;  set; }
+        public  IEnumerable<Post> Posts { get;  set; }
     }
 }
