@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Comunicazione.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace Comunicazione.Core.Services
 {
     public interface ICommentService
     {
+        void AddComment(Comment comment);
+        IEnumerable<Comment> GetReplies();
+        void EditComment();
+        void DeleteComment();
+        IEnumerable<Comment> GetAllPostCommentaries();
     }
 }

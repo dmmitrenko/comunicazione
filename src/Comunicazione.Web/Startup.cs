@@ -65,10 +65,12 @@ namespace Comunicazione.Web
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IFollowRepository, FollowRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFollowService, FollowService>();
+            services.AddTransient<ICommentService, CommentService>();
             
 
             services.AddSwaggerGen(c =>

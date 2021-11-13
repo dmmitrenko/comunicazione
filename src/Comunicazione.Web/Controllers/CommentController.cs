@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Comunicazione.Core.Entities;
+using Comunicazione.Core.Services;
+using Comunicazione.Core.Views;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +12,19 @@ namespace Comunicazione.Web.Controllers
 {
     public class CommentController : Controller
     {
-        public IActionResult AddComment(int userId, int postId)
+        private ICommentService _commentService;
+        private IMapper _mapper;
+        public CommentController(ICommentService commentService, IMapper mapper)
         {
-            return View();
+            _commentService = commentService;
+            _mapper = mapper;
+        }
+        [HttpPost("[action]")]
+        public IActionResult AddComment([FromBody] CommentViewModelForCreation commentModel)
+        {
+            var comment = _mapper.Map<Comment>(commentModel);
+            _commentService.AddComment(comment);
+            return Ok();
         }
     }
 }
