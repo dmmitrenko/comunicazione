@@ -22,9 +22,11 @@ namespace Comunicazione.Infrastructure.Services
             _unitOfWork.Complete();
         }
 
-        public void DeleteComment()
+        public void DeleteComment(int id)
         {
-            throw new NotImplementedException();
+            var comment = GetCommentById(id);
+            _unitOfWork.Comments.Remove(comment);
+            _unitOfWork.Complete();
         }
 
         public void EditComment()
@@ -36,6 +38,12 @@ namespace Comunicazione.Infrastructure.Services
         {
             throw new NotImplementedException();
         }
+
+        public Comment GetCommentById(int id)
+            => _unitOfWork.Comments.GetById(id);
+        
+            
+        
 
         public IEnumerable<Comment> GetReplies()
         {

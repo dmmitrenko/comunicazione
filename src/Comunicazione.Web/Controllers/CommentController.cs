@@ -19,12 +19,28 @@ namespace Comunicazione.Web.Controllers
             _commentService = commentService;
             _mapper = mapper;
         }
+
         [HttpPost("[action]")]
         public IActionResult AddComment([FromBody] CommentViewModelForCreation commentModel)
         {
             var comment = _mapper.Map<Comment>(commentModel);
             _commentService.AddComment(comment);
             return Ok();
+        }
+
+        [HttpDelete("[action]/{id}")]
+        public IActionResult DeleteComment(int id)
+        {
+            _commentService.DeleteComment(id);
+            return Ok();
+        }
+
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetCommentById(int id)
+        {
+            var comment = _commentService.GetCommentById(id);
+            var response = _mapper.Map<CommentViewModel>(comment);
+            return Ok(response);
         }
     }
 }

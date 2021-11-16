@@ -22,7 +22,10 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<PostEditModel, Post>();
             CreateMap<Post, PostViewModel>()
                 .ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
+
             CreateMap<CommentViewModelForCreation, Comment>();
+            CreateMap<Comment, CommentViewModel>()
+                .ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Comunicazione.Core.Services
         void AddComment(Comment comment);
         IEnumerable<Comment> GetReplies();
         void EditComment();
-        void DeleteComment();
+        void DeleteComment(int id);
         IEnumerable<Comment> GetAllPostCommentaries();
+        Comment GetCommentById(int id);
     }
 }

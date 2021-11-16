@@ -1,6 +1,7 @@
 ﻿using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Infrastructure.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace Comunicazione.Infrastructure.Repositories
         public CommentRepository(AppDbContext context) : base(context)
         {
 
+        }
+        public new Comment GetById(int id)
+        {
+            return _context.Comments.Include(b => b.User).
+                FirstOrDefault(item => item.CommentId == id);
         }
     }
 }
