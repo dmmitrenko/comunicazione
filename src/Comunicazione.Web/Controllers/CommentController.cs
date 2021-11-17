@@ -42,5 +42,13 @@ namespace Comunicazione.Web.Controllers
             var response = _mapper.Map<CommentViewModel>(comment);
             return Ok(response);
         }
+
+        [HttpPut("[action]/{id}")]
+        public IActionResult EditComment(int id, [FromBody] CommentEditViewModel comment)
+        {
+            _commentService.EditComment(id, comment);
+            return Ok();
+        }
+
     }
 }
