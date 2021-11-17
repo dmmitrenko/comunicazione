@@ -9,5 +9,6 @@ namespace Comunicazione.Core.Repositories
 {
     public interface ICommentRepository : IGenericRepository<Comment>
     {
+        IEnumerable<Comment> GetAllPostCommentaries(int postId);
     }
 }

@@ -13,11 +13,13 @@ namespace Comunicazione.Infrastructure.Mapper
     {
         public AutoMapperConfig()
         {
+            
             CreateMap<User, UserViewModelForCreation>(); 
             CreateMap<UserViewModelForCreation, User>();
             CreateMap<User, UserFullNameModel>();
             CreateMap<User, UserCountFollowersModel>()
                 .ForMember(item => item.Followers, opt => opt.MapFrom(src => src.Follower.Count()));
+            
 
             CreateMap<PostEditModel, Post>();
             CreateMap<Post, PostViewModel>()

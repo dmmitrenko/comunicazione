@@ -21,5 +21,11 @@ namespace Comunicazione.Infrastructure.Repositories
             return _context.Comments.Include(b => b.User).
                 FirstOrDefault(item => item.CommentId == id);
         }
+
+        public IEnumerable<Comment> GetAllPostCommentaries(int postId)
+        {
+            return _context.Comments.Include(b => b.User).Where(item => item.PostId == postId)
+                .OrderByDescending(item => item.DateCreated);
+        }
     }
 }

@@ -43,6 +43,14 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
+        [HttpGet("[action]/{postID}")]
+        public IActionResult GetAllPostCommentaries(int postID)
+        {
+            var comments = _commentService.GetAllPostCommentaries(postID);
+            var response = _mapper.Map<IEnumerable<CommentViewModel>>(comments);
+            return Ok(response);
+        }
+
         [HttpPut("[action]/{id}")]
         public IActionResult EditComment(int id, [FromBody] CommentEditViewModel comment)
         {
