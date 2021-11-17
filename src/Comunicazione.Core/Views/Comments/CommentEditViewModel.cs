@@ -9,5 +9,6 @@ namespace Comunicazione.Core.Views
     public class CommentEditViewModel
     {
         public string Content { get; set; }
+        public DateTime DateUpdate { get { return DateTime.Now; } }
     }
 }
