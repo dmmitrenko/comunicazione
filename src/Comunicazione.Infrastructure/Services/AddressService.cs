@@ -1,6 +1,7 @@
 ﻿using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
+using Comunicazione.Core.Views.Adrresses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +40,11 @@ namespace Comunicazione.Infrastructure.Services
             _unitOfWork.Addresses.GetAddress(userId);
         
 
-        public void UpdateAddress(int userId)
+        public void UpdateAddress(int userId, AddressViewModelForCreation address)
         {
-            throw new NotImplementedException();
+            var entity = _unitOfWork.Addresses.GetAddress(userId);
+            _unitOfWork.Addresses.Update(entity, entity);
+            _unitOfWork.Complete();
         }
     }
 }
