@@ -1,4 +1,6 @@
-﻿using Comunicazione.Core.Services;
+﻿using Comunicazione.Core.Entities;
+using Comunicazione.Core.Repositories;
+using Comunicazione.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,37 @@ namespace Comunicazione.Infrastructure.Services
 {
     public class AddressService : IAddressService
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public AddressService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        public void AddAddress(Address address)
+        {
+            _unitOfWork.Addresses.Add(address);
+            _unitOfWork.Complete();
+        }
+
+        public void AddRange(IEnumerable<Address> addresses)
+        {
+            _unitOfWork.Addresses.AddRange(addresses);
+            _unitOfWork.Complete();
+        }
+
+        public void DeleteAddress(int userId)
+        {
+            var entity = GetAddress(userId);
+            _unitOfWork.Addresses.Remove(entity);
+            _unitOfWork.Complete();
+        }
+
+        public Address GetAddress(int userId) =>
+            _unitOfWork.Addresses.GetAddress(userId);
+        
+
+        public void UpdateAddress(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
