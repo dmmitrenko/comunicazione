@@ -20,11 +20,13 @@ namespace Comunicazione.Web.Controllers
     {
         private IUserService _userService;
         private readonly IMapper _mapper;
+        private UserValidator _validator;
 
         public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
+            _validator = new UserValidator();
         }
 
         [HttpGet("[action]/{count}")]
@@ -51,10 +53,9 @@ namespace Comunicazione.Web.Controllers
         [HttpPost("[action]")]
         public IActionResult AddRange([FromBody] IEnumerable<UserViewModelForCreation> users)
         {
-            var validator = new UserValidator();
             foreach(var item in users)
             {
-                var result = validator.Validate(item);
+                var result = _validator.Validate(item);
                 if (!result.IsValid)
                 {
                     return BadRequest(result.Errors);
@@ -69,8 +70,7 @@ namespace Comunicazione.Web.Controllers
         [HttpPost("[action]")]
         public IActionResult AddUser([FromBody] UserViewModelForCreation model)
         {
-            var validator = new UserValidator();
-            var result = validator.Validate(model);
+            var result = _validator.Validate(model);
             
             if (result.IsValid)
             {
@@ -85,8 +85,7 @@ namespace Comunicazione.Web.Controllers
         [HttpPut("[action]/{id}")]
         public IActionResult UpdateInformation(int id, [FromBody] UserViewModelForCreation information)
         {
-            var validator = new UserValidator();
-            var result = validator.Validate(information);
+            var result = _validator.Validate(information);
             if (result.IsValid)
             {
                 _userService.UpdateInformation(id, information);
