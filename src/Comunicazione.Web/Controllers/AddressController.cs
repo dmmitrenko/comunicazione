@@ -3,6 +3,7 @@ using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
 using Comunicazione.Core.Views.Adrresses;
+using Comunicazione.Infrastructure.Validators;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,22 @@ namespace Comunicazione.Web.Controllers
     {
         private IAddressService _addressService;
         private readonly IMapper _mapper;
+        private AddressValidator _validator; 
+
         public AddressController(IAddressService addressService, IMapper mapper)
         {
             _mapper = mapper;
             _addressService = addressService;
-
+            _validator = new AddressValidator();
         }
 
         [HttpPost("[action]")]
         public IActionResult AddAddress([FromBody]AddressViewModelForCreation address)
         {
+            var result = _validator.Validate(address);
+            if (!result.IsValid)
+                return BadRequest(result.Errors);
+
             var _address = _mapper.Map<Address>(address);
             _addressService.AddAddress(_address);
             return Ok();
@@ -49,6 +56,10 @@ namespace Comunicazione.Web.Controllers
         [HttpPut("[action]/{userId}")]
         public IActionResult UpdateAddress(int userId, AddressViewModelForCreation address)
         {
+            var result = _validator.Validate(address);
+            if (!result.IsValid)
+                return BadRequest(result.Errors);
+
             _addressService.UpdateAddress(userId, address);
             return Ok();
         }

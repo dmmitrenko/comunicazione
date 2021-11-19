@@ -12,9 +12,12 @@ namespace Comunicazione.Infrastructure.Validators
     {
         public AddressValidator()
         {
-            RuleFor(m => m.Country).NotEmpty().Matches(@"^[a-zA-Z]+$");
-            RuleFor(m => m.City).Matches(@"^[a-zA-Z]+$");
-            RuleFor(m => m.City).Matches(@"^[a-zA-Z]+$");
+            RuleFor(m => m.Country).NotEmpty().Matches(@"^[a-zA-Z]+$")
+                .WithMessage("The name of a country cannot consist of numbers");
+            RuleFor(m => m.City).Matches(@"^[a-zA-Z]+$")
+                .WithMessage("The name of a city cannot consist of numbers");
+            RuleFor(m => m.Street).Matches(@"^[a-zA-Z]+$")
+                .WithMessage("A street name cannot consist of numbers");
         }
     }
 }
