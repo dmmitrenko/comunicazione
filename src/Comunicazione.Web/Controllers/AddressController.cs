@@ -46,6 +46,13 @@ namespace Comunicazione.Web.Controllers
             return Ok(response);
         }
 
+        [HttpPut("[action]/{userId}")]
+        public IActionResult UpdateAddress(int userId, AddressViewModelForCreation address)
+        {
+            _addressService.UpdateAddress(userId, address);
+            return Ok();
+        }
+
         [HttpDelete("[action]/{userId}")]
         public IActionResult DeleteAddress(int userId)
         {
