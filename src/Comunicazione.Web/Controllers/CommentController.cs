@@ -2,6 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Services;
 using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Comments;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,14 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpGet("[action]/{id}")]
+        public IActionResult GetReplies(int id)
+        {
+            var response = _commentService.GetReplies(id);
+            var ok = _mapper.Map<IEnumerable<ReplyViewModel>>(response);
+            return Ok(ok);
+        }
+
+        [HttpGet("[action]/{id}")]
         public IActionResult GetCommentById(int id)
         {
             var comment = _commentService.GetCommentById(id);
@@ -57,6 +66,5 @@ namespace Comunicazione.Web.Controllers
             _commentService.EditComment(id, comment);
             return Ok();
         }
-
     }
 }

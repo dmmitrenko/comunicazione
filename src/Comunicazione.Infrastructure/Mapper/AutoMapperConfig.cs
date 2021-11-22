@@ -2,6 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Views;
 using Comunicazione.Core.Views.Adrresses;
+using Comunicazione.Core.Views.Comments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<CommentViewModelForCreation, Comment>();
             CreateMap<Comment, CommentViewModel>()
                 .ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
+            CreateMap<Comment, ReplyViewModel>();
+                //.ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
 
             CreateMap<AddressViewModelForCreation, Address>();
             CreateMap<Address, AddressViewModel>()

@@ -11,7 +11,7 @@ namespace Comunicazione.Core.Services
     public interface ICommentService
     {
         void AddComment(Comment comment);
-        IEnumerable<Comment> GetReplies();
+        IEnumerable<Comment> GetReplies(int id);
         void EditComment(int id, CommentEditViewModel comment);
         void DeleteComment(int id);
         IEnumerable<Comment> GetAllPostCommentaries(int postId);

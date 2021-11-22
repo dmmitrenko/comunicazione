@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Comunicazione.Web
@@ -44,7 +45,8 @@ namespace Comunicazione.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureLoggerService();
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ValidationFilter());

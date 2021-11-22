@@ -47,9 +47,10 @@ namespace Comunicazione.Infrastructure.Services
             => _unitOfWork.Comments.GetById(id);
         
 
-        public IEnumerable<Comment> GetReplies()
+        public IEnumerable<Comment> GetReplies(int id)
         {
-            throw new NotImplementedException();
+            var replies = _unitOfWork.Comments.GetCommentsReply(id);
+            return replies;
         }
     }
 }
