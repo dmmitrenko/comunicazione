@@ -20,7 +20,7 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<UserViewModelForCreation, User>();
             CreateMap<User, UserFullNameModel>();
             CreateMap<User, UserCountFollowersModel>()
-                .ForMember(item => item.Followers, opt => opt.MapFrom(src => src.Follower.Count()));
+                .ForMember(item => item.Followers, opt => opt.MapFrom(src => src.Followee.Count()));
             
 
             CreateMap<PostEditModel, Post>();

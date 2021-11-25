@@ -19,7 +19,7 @@ namespace Comunicazione.Infrastructure.Repositories
         }
 
         public IEnumerable<User> GetPopularUsers(int count)
-            => _context.Users.Include(b => b.Follower).OrderByDescending(d => d.Follower.Count()).Take(count).ToList();
+            => _context.Users.Include(b => b.Followee).OrderByDescending(d => d.Followee.Count()).Take(count).ToList();
 
     }
 }
