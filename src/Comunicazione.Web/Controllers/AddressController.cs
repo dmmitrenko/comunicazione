@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class AddressController : Controller
     {
         private IAddressService _addressService;

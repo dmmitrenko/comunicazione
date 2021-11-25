@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Comunicazione.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class CommentController : Controller
     {
         private ICommentService _commentService;
