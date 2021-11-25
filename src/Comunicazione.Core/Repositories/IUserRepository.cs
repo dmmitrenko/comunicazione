@@ -10,6 +10,6 @@ namespace Comunicazione.Core.Repositories
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        IEnumerable<User> GetPopularUsers(int count);
+        Task<IEnumerable<User>> GetPopularUsers(int count);
     }
 }

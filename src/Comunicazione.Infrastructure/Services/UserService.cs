@@ -48,8 +48,8 @@ namespace Comunicazione.Infrastructure.Services
             _unitOfWork.Complete();   
         }
 
-        public IEnumerable<User> GetPopularUsers(int count)
-            => _unitOfWork.Users.GetPopularUsers(count);
+        public async Task<IEnumerable<User>> GetPopularUsers(int count)
+            => await _unitOfWork.Users.GetPopularUsers(count);
 
         public User GetUserById(int id)
             => _unitOfWork.Users.GetById(id);

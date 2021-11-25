@@ -10,7 +10,7 @@ namespace Comunicazione.Core.Services
 {
     public interface IUserService
     {
-        IEnumerable<User> GetPopularUsers(int count);
+        Task<IEnumerable<User>> GetPopularUsers(int count);
         void AddUser(User user);
         User GetUserById(int id);
         void DeleteUser(int id);

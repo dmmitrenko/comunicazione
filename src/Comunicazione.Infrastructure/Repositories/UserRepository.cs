@@ -18,8 +18,8 @@ namespace Comunicazione.Infrastructure.Repositories
             
         }
 
-        public IEnumerable<User> GetPopularUsers(int count)
-            => _context.Users.Include(b => b.Followee).OrderByDescending(d => d.Followee.Count()).Take(count).ToList();
+        public async Task<IEnumerable<User>> GetPopularUsers(int count)
+            =>  await _context.Users.Include(b => b.Followee).OrderByDescending(d => d.Followee.Count()).Take(count).ToListAsync();
 
     }
 }

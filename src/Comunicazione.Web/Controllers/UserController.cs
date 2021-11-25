@@ -30,9 +30,9 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpGet("[action]/{count}")]
-        public IActionResult GetPopularUsers(int count)
+        public async Task<IActionResult> GetPopularUsers(int count)
         {
-            var users = _userService.GetPopularUsers(count);
+            var users = await _userService.GetPopularUsers(count);
             var response = _mapper.Map<List<UserCountFollowersModel>>(users);
             return Ok(response);
         }
