@@ -11,6 +11,8 @@ namespace Comunicazione.Core.Repositories
         IUserRepository Users { get; }
         IPostRepository Posts { get; }
         IFollowRepository Follows { get; }
+        ICommentRepository Comments { get; }
+        IAddressRepository Addresses { get; }
         int Complete();
     }
 }

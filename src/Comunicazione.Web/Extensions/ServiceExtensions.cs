@@ -13,5 +13,8 @@ namespace Comunicazione.Web.Extensions
     {
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddScoped<ILoggerManager, LoggerManager>();
+        
+
+        
     }
 }
