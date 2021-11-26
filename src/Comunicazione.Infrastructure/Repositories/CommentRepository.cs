@@ -22,16 +22,16 @@ namespace Comunicazione.Infrastructure.Repositories
 				FirstOrDefault(item => item.CommentId == id);
 		}
 
-		public IEnumerable<Comment> GetAllPostCommentaries(int postId)
+		public async Task<IEnumerable<Comment>> GetAllPostCommentaries(int postId)
 		{
-			return _context.Comments.Include(b => b.User).Where(item => item.PostId == postId)
-				.OrderByDescending(item => item.DateCreated);
+			return await _context.Comments.Include(b => b.User).Where(item => item.PostId == postId)
+				.OrderByDescending(item => item.DateCreated).ToListAsync();
 		}
 
-		public IEnumerable<Comment> GetCommentsReply(int id)
+		public async Task<IEnumerable<Comment>> GetCommentsReply(int id)
 		{
 			
-			var result = _context.Comments.FromSqlRaw(
+			var result =  await _context.Comments.FromSqlRaw(
 				@"WITH organization (CommentId, Content, DateCreated, DateUpdated, PostId, ParentCommentId, UserId, below) AS (
 					SELECT CommentId, Content, DateCreated, DateUpdated, PostId, ParentCommentId, UserId, 0
 					FROM Comments
@@ -42,7 +42,7 @@ namespace Comunicazione.Infrastructure.Repositories
 					INNER JOIN organization o
 						ON o.CommentId = e.ParentCommentId
 				)
-				SELECT * FROM organization", id);
+				SELECT * FROM organization", id).ToListAsync();
 
 			return result;
 		}

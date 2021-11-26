@@ -27,9 +27,9 @@ namespace Comunicazione.Infrastructure.UnitOfWork
         public ICommentRepository Comments { get; private set; }
         public IAddressRepository Addresses { get; set; }
 
-        public int Complete()
+        public async Task<int> CompleteAsync()
         {
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

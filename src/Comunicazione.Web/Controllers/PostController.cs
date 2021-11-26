@@ -16,48 +16,44 @@ namespace Comunicazione.Web.Controllers
     public class PostController : Controller
     {
         private IPostService _postService;
-        private readonly IMapper _mapper;
-        public PostController(IMapper mapper, IPostService postService)
+        
+        public PostController(IPostService postService)
         {
-            _mapper = mapper;
             _postService = postService;
         }
 
         [HttpPost("[action]/{userId}")]
-        public IActionResult AddPost(int userId, [FromBody] PostEditModel model)
+        public async Task<IActionResult> AddPost([FromBody] PostEditModel model)
         {
-            var post = _mapper.Map<Post>(model);
-            _postService.AddPost(userId, post);
+            await _postService.AddPost(model);
             return Ok();
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetPostById(int id)
+        public async Task<IActionResult> GetPostById(int id)
         {
-            var model = _postService.GetById(id);
-            var response = _mapper.Map<PostViewModel>(model);
-            return Ok(response);
+            var post = await _postService.GetById(id);
+            return Ok(post);
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetUserPosts(int id)
+        public async Task<IActionResult> GetUserPosts(int id)
         {
-            var userPosts = _postService.GetUserPosts(id);
-            var response = _mapper.Map<IEnumerable<PostViewModel>>(userPosts);
-            return Ok(response);
+            var userPosts = await _postService.GetUserPosts(id);     
+            return Ok(userPosts);
         }
 
         [HttpPut("[action]/{id}")]
-        public IActionResult EditPost(int id, [FromBody] PostEditModel information)
+        public async Task<IActionResult> EditPost(int id, [FromBody] PostEditModel information)
         {
-            _postService.Edit(id, information);
+            await _postService.Edit(id, information);
             return Ok();
         }
 
         [HttpDelete("[action]/{id}")]
-        public IActionResult DeletePost(int id)
+        public async Task<IActionResult> DeletePost(int id)
         {
-            _postService.Delete(id);
+            await _postService.Delete(id);
             return Ok();
         }
     }

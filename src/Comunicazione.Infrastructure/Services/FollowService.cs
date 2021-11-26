@@ -1,6 +1,8 @@
-﻿using Comunicazione.Core.Entities;
+﻿using AutoMapper;
+using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
+using Comunicazione.Core.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +14,17 @@ namespace Comunicazione.Infrastructure.Services
     public class FollowService : IFollowService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public FollowService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public FollowService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public Follow GetFollow(int userId, int recipientId) 
-            => _unitOfWork.Follows.GetFollow(userId, recipientId);
+        public async Task<Follow> GetFollow(int userId, int recipientId) 
+            => await _unitOfWork.Follows.GetFollow(userId, recipientId);
 
-        public void FollowUser(int id, int recipientId)
+        public async Task FollowUser(int id, int recipientId)
         {
             Follow follow = new Follow()
             {
@@ -28,21 +32,27 @@ namespace Comunicazione.Infrastructure.Services
                 FolloweeId = recipientId
             };
 
-            _unitOfWork.Follows.Add(follow);
-            _unitOfWork.Complete(); 
+            await _unitOfWork.Follows.Add(follow);
+            await _unitOfWork.CompleteAsync(); 
         }
 
-        public IEnumerable<User> GetFollowers(int userId) 
-            => _unitOfWork.Follows.GetFollowers(userId);
+        public async Task<IEnumerable<UserFullNameModel>> GetFollowers(int userId)
+        { 
+            var followers = await _unitOfWork.Follows.GetFollowers(userId);
+            return _mapper.Map<IEnumerable<UserFullNameModel>>(followers);
+        }
 
 
-        public IEnumerable<User> GetSubscriptions(int userId)
-            => _unitOfWork.Follows.GetSubscriptions(userId);
+        public async Task<IEnumerable<UserFullNameModel>> GetSubscriptions(int userId)
+        { 
+            var subscriptions = await _unitOfWork.Follows.GetSubscriptions(userId);
+            return _mapper.Map<IEnumerable<UserFullNameModel>>(subscriptions);
+        }
 
         public void DeleteSubscription(Follow follow)
         {
             _unitOfWork.Follows.Remove(follow);
-            _unitOfWork.Complete();
+            _unitOfWork.CompleteAsync();
         }
     }
 }

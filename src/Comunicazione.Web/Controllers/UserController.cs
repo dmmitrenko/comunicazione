@@ -19,13 +19,12 @@ namespace Comunicazione.Web.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-        private readonly IMapper _mapper;
+        
         private UserValidator _validator;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
             _validator = new UserValidator();
         }
 
@@ -33,25 +32,22 @@ namespace Comunicazione.Web.Controllers
         public async Task<IActionResult> GetPopularUsers(int count)
         {
             var users = await _userService.GetPopularUsers(count);
-            var response = _mapper.Map<List<UserCountFollowersModel>>(users);
-            return Ok(response);
+            return Ok(users);
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
-            var user = _userService.GetUserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound($"User with id: {id} doesn't exist in the database");
             }
-
-            var response = _mapper.Map<UserViewModelForCreation>(user);
-            return Ok(response);
+            return Ok(user);
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddRange([FromBody] IEnumerable<UserViewModelForCreation> users)
+        public async Task<IActionResult> AddRange([FromBody] IEnumerable<UserViewModelForCreation> users)
         {
             foreach(var item in users)
             {
@@ -61,21 +57,18 @@ namespace Comunicazione.Web.Controllers
                     return BadRequest(result.Errors);
                 }
             }
-
-            var newUsers = _mapper.Map<IEnumerable<User>>(users);
-            _userService.AddRange(newUsers);
+            await _userService.AddRange(users);
             return Ok();
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddUser([FromBody] UserViewModelForCreation model)
+        public async Task<IActionResult> AddUser([FromBody] UserViewModelForCreation model)
         {
             var result = _validator.Validate(model);
             
             if (result.IsValid)
             {
-                var user = _mapper.Map<User>(model);
-                _userService.AddUser(user);
+                await _userService.AddUser(model);
                 return Ok();
             }
             
@@ -83,23 +76,21 @@ namespace Comunicazione.Web.Controllers
         }
 
         [HttpPut("[action]/{id}")]
-        public IActionResult UpdateInformation(int id, [FromBody] UserViewModelForCreation information)
+        public async Task<IActionResult> UpdateInformation(int id, [FromBody] UserViewModelForCreation information)
         {
             var result = _validator.Validate(information);
             if (result.IsValid)
             {
-                _userService.UpdateInformation(id, information);
+                await _userService.UpdateInformation(id, information);
                 return Ok();
-
             }
-
             return BadRequest(result.Errors);
         }
 
         [HttpDelete("[action]/{id}")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            _userService.DeleteUser(id);
+            await _userService.DeleteUser(id);
             return Ok();
         }
     }

@@ -9,7 +9,7 @@ namespace Comunicazione.Core.Repositories
 {
     public interface ICommentRepository : IGenericRepository<Comment>
     {
-        IEnumerable<Comment> GetAllPostCommentaries(int postId);
-        IEnumerable<Comment> GetCommentsReply(int id);
+        Task<IEnumerable<Comment>> GetAllPostCommentaries(int postId);
+        Task<IEnumerable<Comment>> GetCommentsReply(int id);
     }
 }

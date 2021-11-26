@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
@@ -15,28 +16,34 @@ namespace Comunicazione.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork, ILoggerManager logger)
+        public UserService(IUnitOfWork unitOfWork, ILoggerManager logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public void AddRange(IEnumerable<User> users)
+        public async Task<bool> AddRange(IEnumerable<UserViewModelForCreation> users)
         {
-            _unitOfWork.Users.AddRange(users);
-            _unitOfWork.Complete();
+            var newUsers = _mapper.Map<IEnumerable<User>>(users);
+            await _unitOfWork.Users.AddRange(newUsers);
+            var affectedRows = await _unitOfWork.CompleteAsync();
+            return affectedRows > 0;
         }
 
-        public void AddUser(User user)
+        public async Task<bool> AddUser(UserViewModelForCreation model)
         {
-            _unitOfWork.Users.Add(user);
-            _unitOfWork.Complete();
+            var user = _mapper.Map<User>(model);
+            await _unitOfWork.Users.Add(user);
+            var affectedRows = await _unitOfWork.CompleteAsync();
+            return affectedRows > 0;
         }
 
-        public void DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            var user = GetUserById(id);
+            var user = await _unitOfWork.Users.GetById(id);
          
             if(user == null)
             {
@@ -45,20 +52,28 @@ namespace Comunicazione.Infrastructure.Services
             }
 
             _unitOfWork.Users.Remove(user);
-            _unitOfWork.Complete();   
+            var affectedRows = await _unitOfWork.CompleteAsync();
+            return affectedRows > 0;
         }
 
-        public async Task<IEnumerable<User>> GetPopularUsers(int count)
-            => await _unitOfWork.Users.GetPopularUsers(count);
+        public async Task<IEnumerable<UserCountFollowersModel>> GetPopularUsers(int count)
+        { 
+            var users = await _unitOfWork.Users.GetPopularUsers(count);
+            return _mapper.Map<List<UserCountFollowersModel>>(users);
+        }
 
-        public User GetUserById(int id)
-            => _unitOfWork.Users.GetById(id);
-
-        public void UpdateInformation(int id, UserViewModelForCreation updateUser)
+        public async Task<UserFullNameModel> GetUserById(int id)
         {
-            var user = _unitOfWork.Users.GetById(id);
+            var user = await _unitOfWork.Users.GetById(id);
+            return _mapper.Map<UserFullNameModel>(user);
+        }
+
+        public async Task<bool> UpdateInformation(int id, UserViewModelForCreation updateUser)
+        {
+            var user = await _unitOfWork.Users.GetById(id);
             _unitOfWork.Users.Update(user, updateUser);
-            _unitOfWork.Complete();
+            var affectedRows = await _unitOfWork.CompleteAsync();
+            return affectedRows > 0;
         }
     }
 }

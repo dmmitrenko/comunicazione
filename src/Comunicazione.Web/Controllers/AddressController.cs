@@ -16,59 +16,55 @@ namespace Comunicazione.Web.Controllers
     public class AddressController : Controller
     {
         private IAddressService _addressService;
-        private readonly IMapper _mapper;
+        
         private AddressValidator _validator; 
 
-        public AddressController(IAddressService addressService, IMapper mapper)
+        public AddressController(IAddressService addressService)
         {
-            _mapper = mapper;
             _addressService = addressService;
             _validator = new AddressValidator();
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddAddress([FromBody]AddressViewModelForCreation address)
+        public async Task<IActionResult> AddAddress([FromBody]AddressViewModelForCreation address)
         {
             var result = _validator.Validate(address);
             if (!result.IsValid)
                 return BadRequest(result.Errors);
 
-            var _address = _mapper.Map<Address>(address);
-            _addressService.AddAddress(_address);
+            await _addressService.AddAddress(address);
             return Ok();
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddRange([FromBody] IEnumerable<AddressViewModelForCreation> addresses)
+        public async Task<IActionResult> AddRange([FromBody] IEnumerable<AddressViewModelForCreation> addresses)
         {
-            var _addresses = _mapper.Map<IEnumerable<Address>>(addresses);
-            _addressService.AddRange(_addresses);
+            await _addressService.AddRange(addresses);
             return Ok();
         }
 
         [HttpGet("[action]/{userId}")]
-        public IActionResult GetAddressByUserId(int userId)
+        public async Task<IActionResult> GetAddressByUserId(int userId)
         {
-            var address = _addressService.GetAddress(userId);
-            var response = _mapper.Map<AddressViewModel>(address);
-            return Ok(response);
+            var address = await _addressService.GetAddress(userId);
+            return Ok(address);
         }
 
         [HttpPut("[action]/{userId}")]
-        public IActionResult UpdateAddress(int userId, AddressViewModelForCreation address)
+        public async Task<IActionResult> UpdateAddress(int userId, AddressViewModelForCreation address)
         {
             var result = _validator.Validate(address);
             if (!result.IsValid)
                 return BadRequest(result.Errors);
 
-            _addressService.UpdateAddress(userId, address);
+            await _addressService.UpdateAddress(userId, address);
             return Ok();
         }
 
         [HttpDelete("[action]/{userId}")]
-        public IActionResult DeleteAddress(int userId)
+        public async Task<IActionResult> DeleteAddress(int userId)
         {
-            _addressService.DeleteAddress(userId);
+            await _addressService.DeleteAddress(userId);
             return Ok();
         }
     }

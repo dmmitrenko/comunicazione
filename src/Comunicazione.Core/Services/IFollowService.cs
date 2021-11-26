@@ -1,4 +1,5 @@
 ﻿using Comunicazione.Core.Entities;
+using Comunicazione.Core.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Comunicazione.Core.Services
 {
     public interface IFollowService
     {
-        Follow GetFollow(int userId, int recipientId);
-        void FollowUser(int userId, int recipientId);
-        IEnumerable<User> GetFollowers(int userId);
-        IEnumerable<User> GetSubscriptions(int userId);
+        Task<Follow> GetFollow(int userId, int recipientId);
+        Task FollowUser(int userId, int recipientId);
+        Task<IEnumerable<UserFullNameModel>> GetFollowers(int userId);
+        Task<IEnumerable<UserFullNameModel>> GetSubscriptions(int userId);
         void DeleteSubscription(Follow follow);
     }
 }

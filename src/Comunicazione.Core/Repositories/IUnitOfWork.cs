@@ -13,6 +13,6 @@ namespace Comunicazione.Core.Repositories
         IFollowRepository Follows { get; }
         ICommentRepository Comments { get; }
         IAddressRepository Addresses { get; }
-        int Complete();
+        Task<int> CompleteAsync();
     }
 }

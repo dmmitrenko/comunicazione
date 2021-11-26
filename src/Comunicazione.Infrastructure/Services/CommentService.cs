@@ -7,50 +7,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Comunicazione.Core.Views;
+using AutoMapper;
+using Comunicazione.Core.Views.Comments;
 
 namespace Comunicazione.Infrastructure.Services
 {
     public class CommentService : ICommentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CommentService(IUnitOfWork unitOfWork)
+        private IMapper _mapper;
+        public CommentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public void AddComment(Comment comment)
+        public async Task AddComment(CommentViewModelForCreation commentModel)
         {
-            _unitOfWork.Comments.Add(comment);
-            _unitOfWork.Complete();
+            var comment = _mapper.Map<Comment>(commentModel);
+            await _unitOfWork.Comments.Add(comment);
+            await _unitOfWork.CompleteAsync();
         }
 
-        public void DeleteComment(int id)
+        public async Task DeleteComment(int id)
         {
-            var comment = GetCommentById(id);
+            var comment = await _unitOfWork.Comments.GetById(id);
             _unitOfWork.Comments.Remove(comment);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
 
-        public void EditComment(int id, CommentEditViewModel model)
+        public async Task EditComment(int id, CommentEditViewModel model)
         {
-            var comment = _unitOfWork.Comments.GetById(id);
+            var comment = await _unitOfWork.Comments.GetById(id);
             _unitOfWork.Comments.Update(comment, model);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
 
-        public IEnumerable<Comment> GetAllPostCommentaries(int postId)
+        public async Task<IEnumerable<CommentViewModel>> GetAllPostCommentaries(int postId)
         {
-            var comments = _unitOfWork.Comments.GetAllPostCommentaries(postId);
-            return comments;
+            var comments = await _unitOfWork.Comments.GetAllPostCommentaries(postId);
+            var response = _mapper.Map<IEnumerable<CommentViewModel>>(comments);
+            return response;
         }
 
-        public Comment GetCommentById(int id)
-            => _unitOfWork.Comments.GetById(id);
+        public async Task<CommentViewModel> GetCommentById(int id)
+        {
+            var comment = await _unitOfWork.Comments.GetById(id);
+            return _mapper.Map<CommentViewModel>(comment);
+        }
         
 
-        public IEnumerable<Comment> GetReplies(int id)
+        public async Task<IEnumerable<ReplyViewModel>> GetReplies(int id)
         {
-            var replies = _unitOfWork.Comments.GetCommentsReply(id);
-            return replies;
+            var replies = await _unitOfWork.Comments.GetCommentsReply(id);
+            return _mapper.Map<IEnumerable<ReplyViewModel>>(replies);
         }
     }
 }

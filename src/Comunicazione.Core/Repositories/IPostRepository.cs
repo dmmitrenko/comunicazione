@@ -10,6 +10,6 @@ namespace Comunicazione.Core.Repositories
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
-        IEnumerable<Post> GetUserPosts(int id);
+        Task<IEnumerable<Post>> GetUserPosts(int id);
     }
 }

@@ -17,8 +17,8 @@ namespace Comunicazione.Infrastructure.Repositories
 
         }
 
-        public Address GetAddress(int userId) =>
-            _context.Adresses.Include(b => b.User).FirstOrDefault(item => item.UserId == userId);
+        public async Task<Address> GetAddress(int userId) =>
+            await _context.Adresses.Include(b => b.User).FirstOrDefaultAsync(item => item.UserId == userId);
 
     }
 }

@@ -18,8 +18,8 @@ namespace Comunicazione.Infrastructure.Repositories
 
         }
 
-        public IEnumerable<Post> GetUserPosts(int id)
-            => _context.Posts.Include(b => b.User).Where(item => item.UserId == id);
+        public async Task<IEnumerable<Post>> GetUserPosts(int id)
+            => await _context.Posts.Include(b => b.User).Where(item => item.UserId == id).ToListAsync();
             
         
     }

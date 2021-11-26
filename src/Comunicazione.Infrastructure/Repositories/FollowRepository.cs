@@ -17,27 +17,23 @@ namespace Comunicazione.Infrastructure.Repositories
 
         }
 
-        public Follow GetFollow(int userId, int recipientId)
+        public async Task<Follow> GetFollow(int userId, int recipientId)
         {
-            return _context.Follow
-                .FirstOrDefault(u => u.FollowerId == userId &&
+            return await _context.Follow
+                .FirstOrDefaultAsync(u => u.FollowerId == userId &&
                                           u.FolloweeId == recipientId);
         }
 
-        public IEnumerable<User> GetFollowers(int userId)
+        public async Task<IEnumerable<User>> GetFollowers(int userId)
         {
-            var followers = _context.Follow.Where(u => u.FolloweeId == userId)
-                .Select(item => item.Followee).ToList();
-            
-            return followers;
+            return await _context.Follow.Where(u => u.FolloweeId == userId)
+                .Select(item => item.Followee).ToListAsync();
         }
 
-        public IEnumerable<User> GetSubscriptions(int userId)
+        public async Task<IEnumerable<User>> GetSubscriptions(int userId)
         {
-            var subscriptions = _context.Follow.Where(u => u.FollowerId == userId)
-                .Select(item => item.Follower).ToList();
-            
-            return subscriptions;
+            return await _context.Follow.Where(u => u.FollowerId == userId)
+                .Select(item => item.Follower).ToListAsync();  
         }
     }
 }

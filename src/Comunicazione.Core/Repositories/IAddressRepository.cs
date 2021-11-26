@@ -9,6 +9,6 @@ namespace Comunicazione.Core.Repositories
 {
     public interface IAddressRepository : IGenericRepository<Address>
     {
-        Address GetAddress(int userId);
+        Task<Address> GetAddress(int userId);
     }
 }

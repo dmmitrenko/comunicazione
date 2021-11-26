@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
@@ -13,38 +14,47 @@ namespace Comunicazione.Infrastructure.Services
     public class PostService : IPostService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public PostService(IUnitOfWork unitOfWork)
+        public PostService(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public void AddPost(int userId, Post post)
+        public async Task AddPost(PostEditModel model)
         {
-            post.UserId = userId;
-            _unitOfWork.Posts.Add(post);
-            _unitOfWork.Complete();
+            var post = _mapper.Map<Post>(model);
+     
+            await _unitOfWork.Posts.Add(post);
+            await _unitOfWork.CompleteAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var post = _unitOfWork.Posts.GetById(id);
+            var post = await _unitOfWork.Posts.GetById(id);
             _unitOfWork.Posts.Remove(post);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
 
-        public void Edit(int id, PostEditModel updatePost)
+        public async Task Edit(int id, PostEditModel updatePost)
         {
-            var post = _unitOfWork.Posts.GetById(id);
+            var post = await _unitOfWork.Posts.GetById(id);
             _unitOfWork.Posts.Update(post, updatePost);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
 
-        public Post GetById(int id)
-            => _unitOfWork.Posts.GetById(id);
+        public async Task<PostViewModel> GetById(int id)
+        { 
+            var post = await _unitOfWork.Posts.GetById(id);
+            return _mapper.Map<PostViewModel>(post);
+        }
 
-        public IEnumerable<Post> GetUserPosts(int userId)
-            => _unitOfWork.Posts.GetUserPosts(userId);
+        public async Task<IEnumerable<PostViewModel>> GetUserPosts(int userId)
+        {
+            var users = await _unitOfWork.Posts.GetUserPosts(userId);
+            return _mapper.Map<IEnumerable<PostViewModel>>(users);
+        }
         
     }
 }

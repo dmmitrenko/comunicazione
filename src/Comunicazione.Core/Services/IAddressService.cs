@@ -10,11 +10,11 @@ namespace Comunicazione.Core.Services
 {
     public interface IAddressService
     {
-        void AddAddress(Address address);
-        void UpdateAddress(int userId, AddressViewModelForCreation address);
-        void DeleteAddress(int userId);
-        void AddRange(IEnumerable<Address> addresses);
-        Address GetAddress(int userId);
+        Task AddAddress(AddressViewModelForCreation address);
+        Task UpdateAddress(int userId, AddressViewModelForCreation address);
+        Task DeleteAddress(int userId);
+        Task AddRange(IEnumerable<AddressViewModelForCreation> addresses);
+        Task<AddressViewModel> GetAddress(int userId);
 
     }
 }

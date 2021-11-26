@@ -13,40 +13,37 @@ namespace Comunicazione.Web.Controllers
     public class FollowController : Controller
     {
         private readonly IFollowService _followService;
-        private readonly IMapper _mapper;
-        public FollowController(IFollowService followService, IMapper mapper)
+        
+        public FollowController(IFollowService followService)
         {
             _followService = followService;
-            _mapper = mapper;
         }
 
         [HttpPost("{id}/follow/{recipientId}")]
-        public IActionResult FollowUser(int id, int recipientId)
+        public async Task<IActionResult> FollowUser(int id, int recipientId)
         {
-            _followService.FollowUser(id, recipientId);
+            await _followService.FollowUser(id, recipientId);
             return Ok();
         }
 
         [HttpGet("{userId}/followers")]
-        public IActionResult GetFollowers(int userId)
+        public async Task<IActionResult> GetFollowers(int userId)
         {
-            var followers = _followService.GetFollowers(userId);
-            var response = _mapper.Map<List<UserFullNameModel>>(followers);
-            return Ok(response);
+            var followers = await _followService.GetFollowers(userId);
+            return Ok(followers);
         }
 
         [HttpGet("{userId}/subscriptions")]
-        public IActionResult GetSubscriptions(int userId)
+        public async Task<IActionResult> GetSubscriptions(int userId)
         {
-            var subscriptions = _followService.GetSubscriptions(userId);
-            var response = _mapper.Map<List<UserFullNameModel>>(subscriptions);
-            return Ok(response);
+            var subscriptions = await _followService.GetSubscriptions(userId);
+            return Ok(subscriptions);
         }
 
         [HttpDelete("[action]")]
-        public IActionResult DeleteSubscription([FromBody] int followerId, [FromBody] int followeeId)
+        public async Task<IActionResult> DeleteSubscription([FromBody] int followerId, [FromBody] int followeeId)
         {
-            var follow = _followService.GetFollow(followerId, followeeId);
+            var follow = await _followService.GetFollow(followerId, followeeId);
             _followService.DeleteSubscription(follow);
             return Ok();
         }

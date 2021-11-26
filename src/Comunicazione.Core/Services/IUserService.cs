@@ -10,11 +10,11 @@ namespace Comunicazione.Core.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetPopularUsers(int count);
-        void AddUser(User user);
-        User GetUserById(int id);
-        void DeleteUser(int id);
-        void UpdateInformation(int id, UserViewModelForCreation user);
-        void AddRange(IEnumerable<User> users);
+        Task<IEnumerable<UserCountFollowersModel>> GetPopularUsers(int count);
+        Task<bool> AddUser(UserViewModelForCreation user);
+        Task<UserFullNameModel> GetUserById(int id);
+        Task<bool> DeleteUser(int id);
+        Task<bool> UpdateInformation(int id, UserViewModelForCreation user);
+        Task<bool> AddRange(IEnumerable<UserViewModelForCreation> users);
     }
 }

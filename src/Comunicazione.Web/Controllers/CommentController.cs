@@ -15,56 +15,51 @@ namespace Comunicazione.Web.Controllers
     public class CommentController : Controller
     {
         private ICommentService _commentService;
-        private IMapper _mapper;
-        public CommentController(ICommentService commentService, IMapper mapper)
+        
+        public CommentController(ICommentService commentService)
         {
             _commentService = commentService;
-            _mapper = mapper;
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddComment([FromBody] CommentViewModelForCreation commentModel)
+        public async Task<IActionResult> AddComment([FromBody] CommentViewModelForCreation commentModel)
         {
-            var comment = _mapper.Map<Comment>(commentModel);
-            _commentService.AddComment(comment);
+            await _commentService.AddComment(commentModel);
             return Ok();
         }
 
         [HttpDelete("[action]/{id}")]
-        public IActionResult DeleteComment(int id)
+        public async Task<IActionResult> DeleteComment(int id)
         {
-            _commentService.DeleteComment(id);
+            await _commentService.DeleteComment(id);
             return Ok();
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetReplies(int id)
+        public async Task<IActionResult> GetReplies(int id)
         {
-            var response = _commentService.GetReplies(id);
-            var ok = _mapper.Map<IEnumerable<ReplyViewModel>>(response);
-            return Ok(ok);
+            var response = await _commentService.GetReplies(id);
+            return Ok(response);
         }
 
         [HttpGet("[action]/{id}")]
-        public IActionResult GetCommentById(int id)
+        public async Task<IActionResult> GetCommentById(int id)
         {
-            var comment = _commentService.GetCommentById(id);
-            var response = _mapper.Map<CommentViewModel>(comment);
-            return Ok(response);
+            var comment = await _commentService.GetCommentById(id);
+            return Ok(comment);
         }
 
         [HttpGet("[action]/{postID}")]
-        public IActionResult GetAllPostCommentaries(int postID)
+        public async Task<IActionResult> GetAllPostCommentaries(int postID)
         {
-            var comments = _commentService.GetAllPostCommentaries(postID);
-            var response = _mapper.Map<IEnumerable<CommentViewModel>>(comments);
-            return Ok(response);
+            var comments = await _commentService.GetAllPostCommentaries(postID);
+            return Ok(comments);
         }
 
         [HttpPut("[action]/{id}")]
-        public IActionResult EditComment(int id, [FromBody] CommentEditViewModel comment)
+        public async Task<IActionResult> EditComment(int id, [FromBody] CommentEditViewModel comment)
         {
-            _commentService.EditComment(id, comment);
+            await _commentService.EditComment(id, comment);
             return Ok();
         }
     }

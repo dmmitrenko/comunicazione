@@ -1,4 +1,5 @@
-﻿using Comunicazione.Core.Entities;
+﻿using AutoMapper;
+using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
 using Comunicazione.Core.Views.Adrresses;
@@ -13,38 +14,45 @@ namespace Comunicazione.Infrastructure.Services
     public class AddressService : IAddressService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AddressService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public AddressService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public void AddAddress(Address address)
+        public async Task AddAddress(AddressViewModelForCreation address)
         {
-            _unitOfWork.Addresses.Add(address);
-            _unitOfWork.Complete();
-        }
-
-        public void AddRange(IEnumerable<Address> addresses)
-        {
-            _unitOfWork.Addresses.AddRange(addresses);
-            _unitOfWork.Complete();
+            var _address = _mapper.Map<Address>(address);
+            await _unitOfWork.Addresses.Add(_address);
+            await _unitOfWork.CompleteAsync();
         }
 
-        public void DeleteAddress(int userId)
+        public async Task AddRange(IEnumerable<AddressViewModelForCreation> addresses)
         {
-            var entity = GetAddress(userId);
+            var _addresses = _mapper.Map<IEnumerable<Address>>(addresses);
+            await _unitOfWork.Addresses.AddRange(_addresses);
+            await _unitOfWork.CompleteAsync();
+        }
+
+        public async Task DeleteAddress(int userId)
+        {
+            var entity = await _unitOfWork.Addresses.GetAddress(userId);
             _unitOfWork.Addresses.Remove(entity);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
 
-        public Address GetAddress(int userId) =>
-            _unitOfWork.Addresses.GetAddress(userId);
+        public async Task<AddressViewModel> GetAddress(int userId)
+        {
+            var address = await _unitOfWork.Addresses.GetAddress(userId);
+            return _mapper.Map<AddressViewModel>(address);
+        }
         
 
-        public void UpdateAddress(int userId, AddressViewModelForCreation address)
+        public async Task UpdateAddress(int userId, AddressViewModelForCreation address)
         {
-            var entity = _unitOfWork.Addresses.GetAddress(userId);
+            var entity = await _unitOfWork.Addresses.GetAddress(userId);
             _unitOfWork.Addresses.Update(entity, entity);
-            _unitOfWork.Complete();
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

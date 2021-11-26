@@ -8,6 +8,7 @@ namespace Comunicazione.Core.Views
 {
     public class PostEditModel
     {
+        public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime DateUpdated { get { return DateTime.Now; } }
     }
