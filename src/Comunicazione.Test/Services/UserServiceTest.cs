@@ -45,8 +45,9 @@ namespace Comunicazione.Test
             _unitOfWork.Invocations.Clear();
         }
 
+        #region GetById
         [Test]
-        public async Task Test1()
+        public async Task GetAuthorById_UserExists_Returns_UserDtoWithRequestedId()
         {
             var userId = 1;
             _unitOfWork.Setup(s => s.Users.GetById(userId))
@@ -60,7 +61,7 @@ namespace Comunicazione.Test
         }
 
         [Test]
-        public async Task Test2()
+        public async Task GetUserById_UserDoesNotExist_ReturnsNull()
         {
             var userId = 1;
             var userName = "Ivan";
@@ -77,5 +78,8 @@ namespace Comunicazione.Test
             Assert.AreEqual(userResult, userDto);
             
         }
+        #endregion
+    
+        
     }
 }
