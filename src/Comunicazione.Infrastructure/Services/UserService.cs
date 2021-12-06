@@ -48,7 +48,7 @@ namespace Comunicazione.Infrastructure.Services
             if(user == null)
             {
                 _logger.LogInfo($"User with id: {id} doesn't exist in the database");
-                throw new ArgumentNullException($"User with id: {id} doesn't exist in the database");
+                return false;
             }
 
             _unitOfWork.Users.Remove(user);

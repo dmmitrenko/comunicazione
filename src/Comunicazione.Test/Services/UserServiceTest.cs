@@ -47,7 +47,7 @@ namespace Comunicazione.Test
 
         #region GetById
         [Test]
-        public async Task GetAuthorById_UserExists_Returns_UserDtoWithRequestedId()
+        public async Task GetUserById_UserExists_Returns_UserDtoWithRequestedId()
         {
             var userId = 1;
             _unitOfWork.Setup(s => s.Users.GetById(userId))
@@ -64,9 +64,8 @@ namespace Comunicazione.Test
         public async Task GetUserById_UserDoesNotExist_ReturnsNull()
         {
             var userId = 1;
-            var userName = "Ivan";
-            var user = new User { UserId = userId, FirstName = userName };
-            var userDto = new UserFullNameModel { FirstName = userName };
+            var user = new User { UserId = userId };
+            var userDto = new UserFullNameModel();
 
             _unitOfWork.Setup(s => s.Users.GetById(userId))
                 .ReturnsAsync(user);
@@ -79,7 +78,63 @@ namespace Comunicazione.Test
             
         }
         #endregion
-    
+
+        #region Delete
+
+        [Test]
+        public async Task RemoveUser_UserExists_ReturnsTrue()
+        {
+            var userId = 1;
+            var user = new User { UserId = userId };
+            _unitOfWork.Setup(s => s.Users.GetById(userId))
+                .ReturnsAsync(user);
+            _unitOfWork.Setup(x => x.CompleteAsync())
+                .ReturnsAsync(1);
+
+            var userResult = await _userService.DeleteUser(userId);
+
+            _unitOfWork.Verify(x => x.Users.Remove(user), Times.Once);
+            _unitOfWork.Verify(x => x.CompleteAsync(), Times.Once);
+
+            Assert.AreEqual(userResult, true);
+        }
+
+        [Test]
+        public async Task RemoveUser_UserViewModelNotExist_ReturnsFalse()
+        {
+            var userId = 1;
+            _unitOfWork.Setup(s => s.Users.GetById(userId))
+                .ReturnsAsync(value: null);
+
+            var userResult = await _userService.DeleteUser(userId);
+
+            Assert.AreEqual(userResult, false); 
+        }
+        #endregion
+
+        #region Update
+        [TestCase(0, ExpectedResult = false, Description = "Returns false if there are no affected rows after saving changes to database")]
+        [TestCase(1, ExpectedResult = true, Description = "Returns true if there are affected rows after saving changes to database")]
+        public async Task<bool> UpdateUser(int affectedRows)
+        {
+            var userId = 1;
+            var user = new User() {UserId = userId };
+            var userModel = new UserViewModelForCreation();
+
+            _unitOfWork.Setup(s => s.Users.GetById(userId))
+                .ReturnsAsync(user);
+
+            _unitOfWork.Setup(x => x.CompleteAsync())
+                .ReturnsAsync(affectedRows);
+
+            var result = await _userService.UpdateInformation(userId, userModel);
+
+            _unitOfWork.Verify(x => x.Users.Update(user, userModel), Times.Once);
+            _unitOfWork.Verify(x => x.CompleteAsync(), Times.Once);
+
+            return result;
+        }
         
+        #endregion
     }
 }
