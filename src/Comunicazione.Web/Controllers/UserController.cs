@@ -2,7 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Users;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.Validators;
 using FluentValidation;

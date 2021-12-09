@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Services;
-using Comunicazione.Core.Views;
 using Comunicazione.Core.Views.Comments;
 using Microsoft.AspNetCore.Mvc;
 using System;

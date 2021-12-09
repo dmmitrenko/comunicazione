@@ -1,14 +1,17 @@
 using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
-using Comunicazione.Core.Views;
 using Comunicazione.Infrastructure.EF;
 using Comunicazione.Infrastructure.Repositories;
 using Comunicazione.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Comunicazione.Core.Views.Users;
 
 namespace Comunicazione.Test
 {
@@ -46,22 +49,29 @@ namespace Comunicazione.Test
         }
 
         #region GetById
+
         [Test]
-        public async Task GetUserById_UserExists_Returns_UserDtoWithRequestedId()
+        public async Task GetById_UserNotExist_ReturnsNull()
         {
+
             var userId = 1;
+            var user = new User() { UserId = userId };
+            var userDto = new UserFullNameModel();
+
             _unitOfWork.Setup(s => s.Users.GetById(userId))
-                .ReturnsAsync(value: null);
-            _mapper.Setup(s => s.Map<UserFullNameModel>(null))
-                .Returns(value: null);
+                .ReturnsAsync(user);
+            _mapper.Setup(s => s.Map<UserFullNameModel>(user))
+                .Returns(userDto);
 
-            var userResult = await _userService.GetUserById(userId);
+            var usersResult = await _userService.GetUserById(2);
 
-            Assert.Null(userResult);
+            
+
+            Assert.IsNull(usersResult);
         }
 
         [Test]
-        public async Task GetUserById_UserDoesNotExist_ReturnsNull()
+        public async Task GetById_UserExists_Returns_UserModel()
         {
             var userId = 1;
             var user = new User { UserId = userId };
@@ -74,8 +84,28 @@ namespace Comunicazione.Test
 
             var userResult = await _userService.GetUserById(userId);
 
-            Assert.AreEqual(userResult, userDto);
+            Assert.IsTrue(userResult is UserFullNameModel);
             
+        }
+        #endregion
+
+        #region Post
+        [Test]
+        public async Task AddUser()
+        {
+            var user = new User();
+            _unitOfWork.Setup(s => s.Users.Add(user))
+                .ReturnsAsync(true);
+            _unitOfWork.Setup(x => x.CompleteAsync())
+                .ReturnsAsync(1);
+
+            var userDto = new UserViewModelForCreation();
+                 
+            
+            var userResult = await _userService.AddUser(userDto);
+
+            Assert.IsTrue(userResult);
+
         }
         #endregion
 

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Comunicazione.Core.Entities;
-using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Users;
 using Comunicazione.Core.Views.Adrresses;
 using Comunicazione.Core.Views.Comments;
+using Comunicazione.Core.Views.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
