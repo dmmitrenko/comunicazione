@@ -90,8 +90,11 @@ namespace Comunicazione.Web.Controllers
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUser(id);
+            var status = await _userService.DeleteUser(id);
+            if (!status)
+                return NotFound();
             return Ok();
+
         }
     }
 }

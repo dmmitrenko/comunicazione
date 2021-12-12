@@ -44,6 +44,8 @@ namespace Comunicazione.Infrastructure.Repositories
 				)
 				SELECT * FROM organization", id).ToListAsync();
 
+			var author = await _context.Comments.Include(b => b.User).Where(item => item.CommentId == id).ToListAsync();
+
 			return result;
 		}
 	}

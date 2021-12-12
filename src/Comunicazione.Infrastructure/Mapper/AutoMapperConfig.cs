@@ -31,8 +31,8 @@ namespace Comunicazione.Infrastructure.Mapper
             CreateMap<CommentViewModelForCreation, Comment>();
             CreateMap<Comment, CommentViewModel>()
                 .ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
-            CreateMap<Comment, ReplyViewModel>();
-                //.ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
+            CreateMap<Comment, ReplyViewModel>()
+                .ForMember(item => item.Author, opt => opt.MapFrom(src => src.User));
 
             CreateMap<AddressViewModelForCreation, Address>();
             CreateMap<Address, AddressViewModel>()
