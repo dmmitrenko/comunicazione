@@ -29,9 +29,9 @@ namespace Comunicazione.Infrastructure.Repositories
             return true;
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return await _context.Set<T>().ToListAsync();
+            return _context.Set<T>().AsQueryable();
         }
 
         public virtual async Task<T> GetById(int id)

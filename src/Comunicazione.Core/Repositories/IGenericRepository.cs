@@ -9,7 +9,7 @@ namespace Comunicazione.Core.Repositories
     public interface IGenericRepository<T> where T : class
     {
         Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        IQueryable<T> GetAll();
         Task<bool> Add(T entity);
         Task<bool> AddRange(IEnumerable<T> entities);
         void Remove(T entity);

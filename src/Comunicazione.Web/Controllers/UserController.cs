@@ -2,7 +2,7 @@
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Users;
 using Comunicazione.Infrastructure.Services;
 using Comunicazione.Infrastructure.Validators;
 using FluentValidation;
@@ -90,8 +90,11 @@ namespace Comunicazione.Web.Controllers
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUser(id);
+            var status = await _userService.DeleteUser(id);
+            if (!status)
+                return NotFound();
             return Ok();
+
         }
     }
 }

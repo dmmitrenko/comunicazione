@@ -1,5 +1,5 @@
 ﻿using Comunicazione.Core.Entities;
-using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

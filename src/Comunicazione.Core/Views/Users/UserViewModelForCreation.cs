@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Comunicazione.Core.Views
+namespace Comunicazione.Core.Views.Users
 {
     public class UserViewModelForCreation
     {

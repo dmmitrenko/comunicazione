@@ -8,7 +8,7 @@ using AutoMapper;
 using Comunicazione.Core.Entities;
 using Comunicazione.Core.Repositories;
 using Comunicazione.Core.Services;
-using Comunicazione.Core.Views;
+using Comunicazione.Core.Views.Users;
 
 namespace Comunicazione.Infrastructure.Services
 {
@@ -48,7 +48,7 @@ namespace Comunicazione.Infrastructure.Services
             if(user == null)
             {
                 _logger.LogInfo($"User with id: {id} doesn't exist in the database");
-                throw new ArgumentNullException($"User with id: {id} doesn't exist in the database");
+                return false;
             }
 
             _unitOfWork.Users.Remove(user);

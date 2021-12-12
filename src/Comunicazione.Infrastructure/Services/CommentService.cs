@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Comunicazione.Core.Views;
 using AutoMapper;
 using Comunicazione.Core.Views.Comments;
+using Comunicazione.Core.Views.Users;
 
 namespace Comunicazione.Infrastructure.Services
 {
@@ -16,6 +17,7 @@ namespace Comunicazione.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private IMapper _mapper;
+
         public CommentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -59,7 +61,15 @@ namespace Comunicazione.Infrastructure.Services
         public async Task<IEnumerable<ReplyViewModel>> GetReplies(int id)
         {
             var replies = await _unitOfWork.Comments.GetCommentsReply(id);
-            return _mapper.Map<IEnumerable<ReplyViewModel>>(replies);
+            
+            foreach (var item in replies)
+            {
+                var user = await _unitOfWork.Users.GetById(item.UserId);
+                item.User = user;
+            }
+            
+            var response = _mapper.Map<IEnumerable<ReplyViewModel>>(replies);
+            return response;
         }
     }
 }
